@@ -3,71 +3,42 @@
     using DAL;
     using DAL.Core;
     using DAL.Entity;
-    using DAL.Identity;
-    using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
 
     internal class Program
     {
         private static void Main()
         {
-            /*
             Console.WriteLine("Testing DAL...");
 
-            ApplicationUser user;
-
             using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
             {
-                ApplicationUserManager manager = new ApplicationUserManager(uow);
+                IRepository<Player> playersRepo = uow.Repository<Player>();
 
-                user = manager.Find("admin", "adminadmin");
-                uow.Commit();
-            }
-
-            using (IUnitOfWork uow = new UserUnitOfWork<ApplicationUser>(new TournamentzModelContext(), user))
-            {
-                TodoEntry entry1 = new TodoEntry { Name = "Prvi TODO", Difficulty = 4 };
-                TodoEntry entry2 = new TodoEntry { Name = "Drugi TODO", Difficulty = 3 };
-                TodoEntry entry3 = new TodoEntry { Name = "Treći TODO", Difficulty = 1 };
-
-                IRepository<TodoEntry> todoRepo = uow.Repository<TodoEntry>();
-
-                todoRepo.Insert(entry1);
-                todoRepo.Insert(entry2);
-                todoRepo.Insert(entry3);
-
-                entry3.Name = "Treći TODO (ispravak)";
-                todoRepo.Update(entry3);
-
-                List<TodoEntry> todoEntries = todoRepo.Query.ToList();
-
-                foreach (TodoEntry entry in todoEntries)
-                {
-                    Console.WriteLine($"{entry.Id} - {entry.Name}, difficulty = {entry.Difficulty}");
-                }
-                uow.Commit();
-            }
-
-            using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
-            {
-                IRepository<TodoEntry> todoRepo = uow.Repository<TodoEntry>();
-
-                List<Guid> entries = todoRepo.Query
-                    .Select(t => t.Id)
+                List<Player> players = playersRepo.Query
+                    .OrderBy(p => p.Nickname)
+                    .Include(p => p.ApplicationUser.Roles)
                     .ToList();
 
-                foreach (Guid entry in entries)
+                foreach (Player player in players)
                 {
-                    todoRepo.Delete(entry);
+                    Console.WriteLine($"{player.Nickname} - {player.Name} {player.Surname}");
+                    if (player.ApplicationUser != null)
+                    {
+                        Console.WriteLine($"---> has account with e-mail {player.ApplicationUser.Email}");
+                    }
+
+                    Console.WriteLine();
                 }
+
                 uow.Commit();
             }
 
             Console.WriteLine("DAL test success.");
             Console.ReadKey();
-            */
         }
     }
 }
