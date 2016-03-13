@@ -13,6 +13,7 @@
     {
         private static void Main()
         {
+            /*
             Console.WriteLine("Testing DAL...");
 
             ApplicationUser user;
@@ -66,6 +67,7 @@
 
             Console.WriteLine("DAL test success.");
             Console.ReadKey();
+            */
         }
     }
 }

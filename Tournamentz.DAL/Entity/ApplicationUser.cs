@@ -6,24 +6,9 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public sealed class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<Guid>, IEntity
+    public class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<Guid>, IEntity
     {
-        public ApplicationUser()
-        {
-            this.Id = Guid.NewGuid();
-        }
-
-        [Required]
-        [StringLength(50)]
-        public string Ime { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Prezime { get; set; }
-
-        [StringLength(11, MinimumLength = 11)]
-        [RegularExpression("^[0-9]*$")]
-        public string Oib { get; set; }
+        public virtual Player Player { get; set; }
     }
 
     #region ASP.NET Identity utils

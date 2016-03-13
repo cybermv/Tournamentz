@@ -22,7 +22,7 @@
 
         protected void Seed(TournamentzModelContext context)
         {
-            if (context.Users.Any()) { return; }
+            /*if (context.Users.Any()) { return; }
 
             BasicUnitOfWork uow = new BasicUnitOfWork(context);
 
@@ -82,7 +82,7 @@
             userManager.AddToRole(drugiUser.Id, "User");
             userManager.AddToRole(treciUser.Id, "User");
 
-            uow.Commit();
+            uow.Commit();*/
         }
     }
 }

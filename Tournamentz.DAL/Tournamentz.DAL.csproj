@@ -60,13 +60,30 @@
     <Compile Include="Core\UserUnitOfWork.cs" />
     <Compile Include="Entity\Core\IEntity.cs" />
     <Compile Include="Entity\Core\ITrackedEntity.cs" />
+    <Compile Include="Entity\Game.cs" />
+    <Compile Include="Entity\GameType.cs" />
+    <Compile Include="Entity\Player.cs" />
+    <Compile Include="Entity\Team.cs" />
+    <Compile Include="Entity\TeamPlayer.cs" />
+    <Compile Include="Entity\Tournament.cs" />
+    <Compile Include="Entity\TournamentRound.cs" />
+    <Compile Include="Entity\TournamentRoundParticipant.cs" />
+    <Compile Include="Entity\TodoEntry.cs" />
+    <Compile Include="Entity\TournamentType.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\ApplicationUserStore.cs" />
+    <Compile Include="Migrations\201603131413376_RemovedUnusedEntities.cs" />
+    <Compile Include="Migrations\201603131413376_RemovedUnusedEntities.Designer.cs">
+      <DependentUpon>201603131413376_RemovedUnusedEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603131425470_InitialDomainModel.cs" />
+    <Compile Include="Migrations\201603131425470_InitialDomainModel.Designer.cs">
+      <DependentUpon>201603131425470_InitialDomainModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserCreateDatabaseInitializer.cs" />
     <Compile Include="Entity\ApplicationUser.cs" />
     <Compile Include="Entity\Core\EntityBase.cs" />
     <Compile Include="Entity\Core\TrackedEntityBase.cs" />
-    <Compile Include="Entity\TodoEntry.cs" />
     <Compile Include="Migrations\201603121509388_Initial.cs" />
     <Compile Include="Migrations\201603121509388_Initial.Designer.cs">
       <DependentUpon>201603121509388_Initial.cs</DependentUpon>
@@ -89,6 +106,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603121524000_AddedTestTodoEntries.resx">
       <DependentUpon>201603121524000_AddedTestTodoEntries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603131413376_RemovedUnusedEntities.resx">
+      <DependentUpon>201603131413376_RemovedUnusedEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603131425470_InitialDomainModel.resx">
+      <DependentUpon>201603131425470_InitialDomainModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
