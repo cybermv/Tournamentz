@@ -17,7 +17,7 @@
 
             ApplicationUser user;
 
-            using (IUnitOfWork uow = new UnitOfWork(new TournamentzModelContext()))
+            using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
             {
                 ApplicationUserManager manager = new ApplicationUserManager(uow);
 
@@ -25,13 +25,13 @@
                 uow.Commit();
             }
 
-            using (IUnitOfWork uow = new UnitOfWork(new TournamentzModelContext()))
+            using (IUnitOfWork uow = new UserUnitOfWork<ApplicationUser>(new TournamentzModelContext(), user))
             {
                 TodoEntry entry1 = new TodoEntry { Name = "Prvi TODO", Difficulty = 4 };
                 TodoEntry entry2 = new TodoEntry { Name = "Drugi TODO", Difficulty = 3 };
                 TodoEntry entry3 = new TodoEntry { Name = "Treći TODO", Difficulty = 1 };
 
-                IRepository<TodoEntry> todoRepo = new TrackedEntityRepository<TodoEntry, ApplicationUser>(uow, user);
+                IRepository<TodoEntry> todoRepo = uow.Repository<TodoEntry>();
 
                 todoRepo.Insert(entry1);
                 todoRepo.Insert(entry2);
@@ -49,7 +49,7 @@
                 uow.Commit();
             }
 
-            using (IUnitOfWork uow = new UnitOfWork(new TournamentzModelContext()))
+            using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
             {
                 IRepository<TodoEntry> todoRepo = uow.Repository<TodoEntry>();
 

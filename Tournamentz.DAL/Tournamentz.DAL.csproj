@@ -56,7 +56,10 @@
     <Compile Include="Core\IRepository.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\TrackedEntityRepository.cs" />
-    <Compile Include="Core\UnitOfWork.cs" />
+    <Compile Include="Core\BasicUnitOfWork.cs" />
+    <Compile Include="Core\UserUnitOfWork.cs" />
+    <Compile Include="Entity\Core\IEntity.cs" />
+    <Compile Include="Entity\Core\ITrackedEntity.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\ApplicationUserStore.cs" />
     <Compile Include="UserCreateDatabaseInitializer.cs" />

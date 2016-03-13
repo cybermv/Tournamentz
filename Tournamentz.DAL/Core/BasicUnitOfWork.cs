@@ -5,11 +5,11 @@
     using System.Data;
     using System.Data.Entity;
 
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class BasicUnitOfWork : IUnitOfWork, IDisposable
     {
         private DbContextTransaction _transaction;
 
-        public UnitOfWork(DbContext context)
+        public BasicUnitOfWork(DbContext context)
         {
             this.Context = context;
             StartTransaction();
@@ -23,7 +23,7 @@
             return new GenericEntityRepository<TEntity>(this);
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
             if (this._transaction != null &&
                 this._transaction.UnderlyingTransaction.Connection != null &&
@@ -34,7 +34,7 @@
             }
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
             if (this._transaction != null &&
                 this._transaction.UnderlyingTransaction.Connection != null &&

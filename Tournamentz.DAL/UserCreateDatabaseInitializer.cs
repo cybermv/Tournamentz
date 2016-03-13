@@ -24,7 +24,7 @@
         {
             if (context.Users.Any()) { return; }
 
-            UnitOfWork uow = new UnitOfWork(context);
+            BasicUnitOfWork uow = new BasicUnitOfWork(context);
 
             ApplicationRole adminRole = new ApplicationRole { Name = "Admin" };
             ApplicationRole userRole = new ApplicationRole { Name = "User" };

@@ -28,6 +28,8 @@
 
     #region ASP.NET Identity utils
 
+    // TODO: consult this
+    // http://www.asp.net/identity/overview/extensibility/change-primary-key-for-users-in-aspnet-identity
     public class ApplicationUserLogin : IdentityUserLogin<Guid> { }
 
     public class ApplicationUserRole : IdentityUserRole<Guid> { }
