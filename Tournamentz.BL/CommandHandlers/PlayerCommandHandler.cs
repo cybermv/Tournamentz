@@ -22,7 +22,7 @@
 
             playerRepo.Insert(player);
 
-            this.ReturnValue = player.Id;
+            this.Result.ReturnValue = player.Id;
         }
 
         public void Handle(PlayerCommands.Update command)

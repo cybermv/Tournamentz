@@ -34,12 +34,13 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                ICommandGate createGate = context.Services.Resolve<ICommandGate<PlayerCommands.Create>>();
+                ICommandGate createGate = context.Services
+                    .Resolve<ICommandGate<PlayerCommands.Create>>();
 
                 ICommand createCmd = new PlayerCommands.Create
                 {
                     ExecutionContext = context,
-                    Nickname = "mate",
+                    Nickname = "vele",
                     Name = "Mateo",
                     Surname = "Velenik"
                 };
@@ -49,22 +50,6 @@
                 Player rv = context.UnitOfWork.Repository<Player>().FindById((Guid)result.ReturnValue);
 
                 context.UnitOfWork.Rollback();
-
-                /*
-                ICommandResult result = gate.Run(createCmd);
-
-                ICommand updateCmd = new PlayerCommands.Update
-                {
-                    UnitOfWork = uow,
-                    Id = (Guid)result.ReturnValue,
-                    Name = "Yee",
-                    Surname = "Haaa"
-                };
-
-                gate.Run(updateCmd);
-
-                Player rv = uow.Repository<Player>().FindById((Guid)result.ReturnValue);
-                */
             }
 
             Console.ReadKey();

@@ -46,8 +46,11 @@
                 return result;
             }
 
-            result.ReturnValue = handler.ReturnValue;
-            // TODO: log success
+            result.BusinessRules.Add(handler.Result.BusinessRules);
+            result.Exception = handler.Result.Exception;
+            result.ReturnValue = handler.Result.ReturnValue;
+
+            // TODO: log success/broken rules
             return result;
         }
 

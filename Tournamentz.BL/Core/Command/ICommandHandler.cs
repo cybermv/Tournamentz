@@ -1,15 +1,10 @@
 ﻿namespace Tournamentz.BL.Core.Command
 {
-    public interface ICommandHandler
-    {
-        object ReturnValue { get; set; }
-
-        void Handle(ICommand command);
-    }
-
-    public interface ICommandHandler<TCommand> : ICommandHandler
+    public interface ICommandHandler<TCommand>
         where TCommand : ICommand
     {
+        ICommandResult Result { get; }
+
         void Handle(TCommand command);
     }
 }

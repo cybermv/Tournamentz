@@ -13,7 +13,7 @@
             this.BusinessRules = new BusinessRuleCollection();
         }
 
-        public BusinessRuleCollection BusinessRules { get; private set; }
+        public BusinessRuleCollection BusinessRules { get; set; }
 
         public Exception Exception
         {

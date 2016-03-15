@@ -25,6 +25,8 @@
             }
         }
 
+        public bool AllRulesAreObeyed { get { return this._rules.TrueForAll(b => !b.IsBroken); } }
+
         public IEnumerator<BusinessRule> GetEnumerator()
         {
             return this._rules.GetEnumerator();
