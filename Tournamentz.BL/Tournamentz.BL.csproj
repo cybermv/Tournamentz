@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7ACE71A3-EFF5-4CB3-893B-9E8E9ADB2C53}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{6801BFCC-81C5-41A1-8BBB-D3DF69753B9E}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tournamentz.TestConsole</RootNamespace>
-    <AssemblyName>Tournamentz.TestConsole</AssemblyName>
+    <RootNamespace>Tournamentz.BL</RootNamespace>
+    <AssemblyName>Tournamentz.BL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -58,23 +55,38 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="CommandHandlers\PlayerCommandHandler.cs" />
+    <Compile Include="Commands\PlayerCommands.cs" />
+    <Compile Include="Core\BasicExecutionContext.cs" />
+    <Compile Include="Core\Command\BasicCommandGate.cs" />
+    <Compile Include="Core\Command\CommandBase.cs" />
+    <Compile Include="Core\Command\CommandHandlerBase.cs" />
+    <Compile Include="Core\Command\CommandResult.cs" />
+    <Compile Include="Core\Command\CommandResultStatus.cs" />
+    <Compile Include="Core\Command\ICommand.cs" />
+    <Compile Include="Core\Command\ICommandGate.cs" />
+    <Compile Include="Core\Command\ICommandHandler.cs" />
+    <Compile Include="Core\Command\ICommandResult.cs" />
+    <Compile Include="Core\IExecutionContext.cs" />
+    <Compile Include="Core\Query\IQuery.cs" />
+    <Compile Include="Core\Rule\BusinessRule.cs" />
+    <Compile Include="Core\Rule\BusinessRuleCollection.cs" />
+    <Compile Include="Core\Validation\IValidator.cs" />
+    <Compile Include="Core\Validation\ValidatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\PlayerValidators.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tournamentz.BL\Tournamentz.BL.csproj">
-      <Project>{6801BFCC-81C5-41A1-8BBB-D3DF69753B9E}</Project>
-      <Name>Tournamentz.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tournamentz.DAL\Tournamentz.DAL.csproj">
-      <Project>{05606f8d-3ec8-4943-90e0-127f70c3e6ae}</Project>
+      <Project>{05606F8D-3EC8-4943-90E0-127F70C3E6AE}</Project>
       <Name>Tournamentz.DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

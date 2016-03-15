@@ -1,43 +1,72 @@
 ﻿namespace Tournamentz.TestConsole
 {
+    using Autofac;
+    using BL.CommandHandlers;
+    using BL.Commands;
+    using BL.Core;
+    using BL.Core.Command;
+    using BL.Validators;
     using DAL;
     using DAL.Core;
     using DAL.Entity;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Linq;
 
     internal class Program
     {
         private static void Main()
         {
-            Console.WriteLine("Testing DAL...");
+            // TODO: move dependencies in main host project
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterType<BasicExecutionContext>().As<IExecutionContext>();
+            builder.RegisterType<BasicUnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<TournamentzModelContext>().As<DbContext>();
 
-            using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
+            builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
+            builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
+            builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
+
+            IContainer container = builder.Build();
+
+            builder = new ContainerBuilder();
+            builder.RegisterInstance(container).As<IContainer>();
+            builder.Update(container);
+
+            using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                IRepository<Player> playersRepo = uow.Repository<Player>();
+                ICommandGate createGate = context.Services.Resolve<ICommandGate<PlayerCommands.Create>>();
 
-                List<Player> players = playersRepo.Query
-                    .OrderBy(p => p.Nickname)
-                    .Include(p => p.ApplicationUser.Roles)
-                    .ToList();
-
-                foreach (Player player in players)
+                ICommand createCmd = new PlayerCommands.Create
                 {
-                    Console.WriteLine($"{player.Nickname} - {player.Name} {player.Surname}");
-                    if (player.ApplicationUser != null)
-                    {
-                        Console.WriteLine($"---> has account with e-mail {player.ApplicationUser.Email}");
-                    }
+                    ExecutionContext = context,
+                    Nickname = "mate",
+                    Name = "Mateo",
+                    Surname = "Velenik"
+                };
 
-                    Console.WriteLine();
-                }
+                ICommandResult result = createGate.Run(createCmd);
 
-                uow.Commit();
+                Player rv = context.UnitOfWork.Repository<Player>().FindById((Guid)result.ReturnValue);
+
+                context.UnitOfWork.Rollback();
+
+                /*
+                ICommandResult result = gate.Run(createCmd);
+
+                ICommand updateCmd = new PlayerCommands.Update
+                {
+                    UnitOfWork = uow,
+                    Id = (Guid)result.ReturnValue,
+                    Name = "Yee",
+                    Surname = "Haaa"
+                };
+
+                gate.Run(updateCmd);
+
+                Player rv = uow.Repository<Player>().FindById((Guid)result.ReturnValue);
+                */
             }
 
-            Console.WriteLine("DAL test success.");
             Console.ReadKey();
         }
     }
