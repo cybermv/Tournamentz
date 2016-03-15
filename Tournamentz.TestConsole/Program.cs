@@ -5,12 +5,15 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
+    using BL.Queries;
     using BL.Validators;
     using DAL;
     using DAL.Core;
     using DAL.Entity;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Linq;
 
     internal class Program
     {
@@ -34,6 +37,8 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
+                List<PlayerQueries.Dropdown> list = new PlayerQueries.Dropdown().Query(context).ToList();
+
                 ICommandGate createGate = context.Services
                     .Resolve<ICommandGate<PlayerCommands.Create>>();
 
