@@ -26,6 +26,7 @@
             builder.RegisterType<TournamentzModelContext>().As<DbContext>();
 
             builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
+            builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
             builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
             builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
 
@@ -47,10 +48,25 @@
                     ExecutionContext = context,
                     Nickname = "vele",
                     Name = "Mateo",
-                    Surname = "Velenik"
+                    Surname = "Veleniććć"
                 };
 
                 ICommandResult result = createGate.Run(createCmd);
+
+                ICommandGate updateGate = context.Services
+                    .Resolve<ICommandGate<PlayerCommands.Update>>();
+
+                PlayerCommands.Update update = new PlayerCommands.Update
+                {
+                    ExecutionContext = context,
+                    Id = (Guid)result.ReturnValue,
+                    Name = "Mateo",
+                    Surname = "Velenik"
+                };
+
+                ICommandResult updateResult = updateGate.Run(update);
+
+                Console.WriteLine(updateResult.ToString());
 
                 Player rv = context.UnitOfWork.Repository<Player>().FindById((Guid)result.ReturnValue);
 

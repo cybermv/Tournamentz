@@ -15,7 +15,17 @@
         {
             CommandResult result = new CommandResult();
 
-            // 1. validate broken rules
+            // 1. validate ExistsInTable attributes
+            BusinessRuleCollection rules = ExistsInTableValidator.ValidateAttributes(command);
+            result.BusinessRules.Add(rules);
+
+            if (result.Status != CommandResultStatus.Success)
+            {
+                // TODO: log broken rules
+                return result;
+            }
+
+            // 2. execute all validators
             IEnumerable<IValidator<TCommand>> validators = command.ExecutionContext.Services
                 .Resolve<IEnumerable<IValidator<TCommand>>>();
 
@@ -31,7 +41,7 @@
                 return result;
             }
 
-            // 2. execute handler
+            // 3. execute handler
             ICommandHandler<TCommand> handler = command.ExecutionContext.Services
                 .Resolve<ICommandHandler<TCommand>>();
 

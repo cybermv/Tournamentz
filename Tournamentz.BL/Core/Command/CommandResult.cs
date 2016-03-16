@@ -39,5 +39,23 @@
         }
 
         public object ReturnValue { get; set; }
+
+        public override string ToString()
+        {
+            switch (this.Status)
+            {
+                case CommandResultStatus.Success:
+                    return string.Format("Success; return value {0}", this.ReturnValue ?? "null");
+
+                case CommandResultStatus.BrokenRules:
+                    return string.Format("Broken rules; count = {0}", this.BusinessRules.Count(b => b.IsBroken));
+
+                case CommandResultStatus.SystemError:
+                    return string.Format("System error; {0}", this.Exception);
+
+                default:
+                    return "Invalid result state";
+            }
+        }
     }
 }

@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\PlayerCommandHandler.cs" />
     <Compile Include="Commands\PlayerCommands.cs" />
+    <Compile Include="Core\Attribute\ExistsInTableAttribute.cs" />
     <Compile Include="Core\BasicExecutionContext.cs" />
     <Compile Include="Core\Command\BasicCommandGate.cs" />
     <Compile Include="Core\Command\CommandBase.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Core\Query\KeyValueQueryBase.cs" />
     <Compile Include="Core\Rule\BusinessRule.cs" />
     <Compile Include="Core\Rule\BusinessRuleCollection.cs" />
+    <Compile Include="Core\Validation\ExistsInTableValidator.cs" />
     <Compile Include="Core\Validation\IValidator.cs" />
     <Compile Include="Core\Validation\ValidatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
