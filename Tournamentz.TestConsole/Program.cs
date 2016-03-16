@@ -5,6 +5,7 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
+    using BL.Core.Query;
     using BL.Queries;
     using BL.Validators;
     using DAL;
@@ -30,6 +31,11 @@
             builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
             builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
 
+            builder.RegisterType<BasicQueryGate<PlayerQueries.All>>().As<IQueryGate<PlayerQueries.All>>();
+            builder.RegisterType<BasicQueryGate<PlayerQueries.Dropdown>>().As<IQueryGate<PlayerQueries.Dropdown>>();
+            builder.RegisterType<PlayerQueries.All>().AsImplementedInterfaces();
+            builder.RegisterType<PlayerQueries.Dropdown>().AsImplementedInterfaces();
+
             IContainer container = builder.Build();
 
             builder = new ContainerBuilder();
@@ -38,7 +44,12 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                List<PlayerQueries.Dropdown> list = new PlayerQueries.Dropdown().Query(context).ToList();
+                IQueryGate<PlayerQueries.All> playersGate = context.Services
+                    .Resolve<IQueryGate<PlayerQueries.All>>();
+
+                IQueryResult<PlayerQueries.All> queryResult = playersGate.Query(context);
+
+                List<PlayerQueries.All> all = queryResult.Query.ToList();
 
                 ICommandGate createGate = context.Services
                     .Resolve<ICommandGate<PlayerCommands.Create>>();

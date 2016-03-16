@@ -3,12 +3,7 @@
     using Command;
     using Rule;
 
-    public interface IValidator
-    {
-        BusinessRuleCollection Validate(ICommand command);
-    }
-
-    public interface IValidator<TCommand> : IValidator
+    public interface IValidator<TCommand>
         where TCommand : ICommand
     {
         BusinessRuleCollection Validate(TCommand command);

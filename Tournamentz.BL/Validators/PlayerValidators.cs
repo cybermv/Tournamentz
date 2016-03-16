@@ -6,8 +6,8 @@
 
     public abstract class PlayerValidators
     {
-        public class UsernameValidation : ValidatorBase
-            , IValidator<PlayerCommands.Create>
+        public class UsernameValidation
+            : IValidator<PlayerCommands.Create>
             , IValidator<PlayerCommands.Update>
         {
             public BusinessRuleCollection Validate(PlayerCommands.Create command)
