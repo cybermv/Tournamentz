@@ -7,6 +7,8 @@
     {
         BusinessRuleCollection BusinessRules { get; set; }
 
+        BusinessRuleCollection PermissionRules { get; }
+
         Exception Exception { get; set; }
 
         CommandResultStatus Status { get; }

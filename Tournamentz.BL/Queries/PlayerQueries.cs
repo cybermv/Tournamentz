@@ -1,12 +1,14 @@
 ﻿namespace Tournamentz.BL.Queries
 {
     using Core;
+    using Core.Attribute;
     using Core.Query;
     using DAL.Entity;
     using System.Linq;
 
     public abstract class PlayerQueries
     {
+        [RequiresRole(TournamentzRoles.Admin)]
         public class All : BasicQueryBase<All>
         {
             public override IQueryable<All> Query(IExecutionContext context)

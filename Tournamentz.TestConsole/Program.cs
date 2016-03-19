@@ -11,6 +11,8 @@
     using DAL;
     using DAL.Core;
     using DAL.Entity;
+    using DAL.Identity;
+    using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -44,12 +46,19 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
+                ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
+                context.User = manager.Find("prvi.user", "prvi.user");
+
                 IQueryGate<PlayerQueries.All> playersGate = context.Services
                     .Resolve<IQueryGate<PlayerQueries.All>>();
 
-                IQueryResult<PlayerQueries.All> queryResult = playersGate.Query(context);
+                IQueryResult<PlayerQueries.All> queryResult1 = playersGate.Query(context);
 
-                List<PlayerQueries.All> all = queryResult.Query.ToList();
+                context.User = manager.Find("admin", "adminadmin");
+
+                IQueryResult<PlayerQueries.All> queryResult2 = playersGate.Query(context);
+
+                List<PlayerQueries.All> allPlayers = queryResult2.Query.ToList();
 
                 ICommandGate createGate = context.Services
                     .Resolve<ICommandGate<PlayerCommands.Create>>();

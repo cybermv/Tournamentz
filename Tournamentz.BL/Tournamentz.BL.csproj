@@ -58,6 +58,7 @@
     <Compile Include="CommandHandlers\PlayerCommandHandler.cs" />
     <Compile Include="Commands\PlayerCommands.cs" />
     <Compile Include="Core\Attribute\ExistsInTableAttribute.cs" />
+    <Compile Include="Core\Attribute\RequiresRoleAttribute.cs" />
     <Compile Include="Core\BasicExecutionContext.cs" />
     <Compile Include="Core\Command\BasicCommandGate.cs" />
     <Compile Include="Core\Command\CommandBase.cs" />
@@ -84,8 +85,10 @@
     <Compile Include="Core\Rule\BusinessRuleCollection.cs" />
     <Compile Include="Core\Validation\ExistsInTableValidator.cs" />
     <Compile Include="Core\Validation\IValidator.cs" />
+    <Compile Include="Core\Validation\RoleValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\PlayerQueries.cs" />
+    <Compile Include="TournamentzRoles.cs" />
     <Compile Include="Validators\PlayerValidators.cs" />
   </ItemGroup>
   <ItemGroup>

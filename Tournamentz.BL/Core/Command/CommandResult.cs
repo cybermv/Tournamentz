@@ -11,9 +11,12 @@
         public CommandResult()
         {
             this.BusinessRules = new BusinessRuleCollection();
+            this.PermissionRules = new BusinessRuleCollection();
         }
 
         public BusinessRuleCollection BusinessRules { get; set; }
+
+        public BusinessRuleCollection PermissionRules { get; set; }
 
         public Exception Exception
         {
@@ -33,6 +36,7 @@
             get
             {
                 if (this.Exception != null) { return CommandResultStatus.SystemError; }
+                if (this.PermissionRules.Any(r => r.IsBroken)) { return CommandResultStatus.PermissionError; }
                 if (this.BusinessRules.Any(r => r.IsBroken)) { return CommandResultStatus.BrokenRules; }
                 return CommandResultStatus.Success;
             }
@@ -46,6 +50,9 @@
             {
                 case CommandResultStatus.Success:
                     return string.Format("Success; return value {0}", this.ReturnValue ?? "null");
+
+                case CommandResultStatus.PermissionError:
+                    return string.Format("Permission error; count = {0}", this.PermissionRules.Count(p => p.IsBroken));
 
                 case CommandResultStatus.BrokenRules:
                     return string.Format("Broken rules; count = {0}", this.BusinessRules.Count(b => b.IsBroken));

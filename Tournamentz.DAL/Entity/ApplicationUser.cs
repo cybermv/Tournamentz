@@ -4,11 +4,17 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<Guid>, IEntity
     {
         public virtual Player Player { get; set; }
+
+        public override string ToString()
+        {
+            return $"Username: {UserName}, player nickname: {Player.Nickname}";
+        }
     }
 
     #region ASP.NET Identity utils

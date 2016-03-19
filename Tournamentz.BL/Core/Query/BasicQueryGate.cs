@@ -1,9 +1,11 @@
 ﻿namespace Tournamentz.BL.Core.Query
 {
     using Autofac;
+    using Rule;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Validation;
 
     public class BasicQueryGate<TQuery> : IQueryGate<TQuery>
         where TQuery : IQuery
@@ -12,7 +14,17 @@
         {
             QueryResult<TQuery> result = new QueryResult<TQuery>();
 
-            // 1. execute handler
+            // 1. validate RequiresRole attributes
+            BusinessRuleCollection permissionRules = RoleValidator.ValidateAttributes<TQuery>(context);
+            result.PermissionRules.Add(permissionRules);
+
+            if (result.Status != QueryResultStatus.Success)
+            {
+                // TODO: log broken permission rules
+                return result;
+            }
+
+            // 2. execute handler
             IQueryHandler<TQuery> handler = context.Services
                 .Resolve<IQueryHandler<TQuery>>();
 

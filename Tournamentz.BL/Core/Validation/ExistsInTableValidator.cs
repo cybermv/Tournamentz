@@ -44,6 +44,7 @@
                 object value = propToValidate.Property.GetValue(command);
                 object foundEntity = findMethod.Invoke(repoInstance, new[] { value });
 
+                // TODO: localize
                 rules.Add(new BusinessRule(
                     foundEntity == null,
                     string.Format("Polje {0} je obavezno", propToValidate.Property.Name),

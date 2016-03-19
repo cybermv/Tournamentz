@@ -3,7 +3,8 @@
     public enum CommandResultStatus
     {
         Success = 1,
-        BrokenRules = 2,
-        SystemError = 3
+        PermissionError = 2,
+        BrokenRules = 3,
+        SystemError = 4
     }
 }

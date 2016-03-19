@@ -5,6 +5,8 @@
 
     public sealed class BusinessRuleCollection : IEnumerable<BusinessRule>
     {
+        public static readonly BusinessRuleCollection Empty = new BusinessRuleCollection();
+
         private readonly List<BusinessRule> _rules;
 
         public BusinessRuleCollection()

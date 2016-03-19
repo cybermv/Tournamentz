@@ -1,5 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Query
 {
+    using Rule;
     using System;
     using System.Linq;
 
@@ -7,6 +8,13 @@
         where TQuery : IQuery
     {
         private Exception _exception;
+
+        public QueryResult()
+        {
+            this.PermissionRules = new BusinessRuleCollection();
+        }
+
+        public BusinessRuleCollection PermissionRules { get; set; }
 
         public Exception Exception
         {
@@ -26,6 +34,7 @@
             get
             {
                 if (this.Exception != null) { return QueryResultStatus.SystemError; }
+                if (this.PermissionRules.Any(r => r.IsBroken)) { return QueryResultStatus.PermissionError; }
                 return QueryResultStatus.Success;
             }
         }
@@ -38,6 +47,9 @@
             {
                 case QueryResultStatus.Success:
                     return string.Format("Success; query = {0}", this.Query);
+
+                case QueryResultStatus.PermissionError:
+                    return string.Format("Permission error; count = {0}", this.PermissionRules.Count(p => p.IsBroken));
 
                 case QueryResultStatus.SystemError:
                     return string.Format("System error; {0}", this.Exception);

@@ -15,7 +15,17 @@
         {
             CommandResult result = new CommandResult();
 
-            // 1. validate ExistsInTable attributes
+            // 1. validate RequiresRole attributes
+            BusinessRuleCollection permissionRules = RoleValidator.ValidateAttributes<TCommand>(command.ExecutionContext);
+            result.PermissionRules.Add(permissionRules);
+
+            if (result.Status != CommandResultStatus.Success)
+            {
+                // TODO: log broken permission rules
+                return result;
+            }
+
+            // 2. validate ExistsInTable attributes
             BusinessRuleCollection rules = ExistsInTableValidator.ValidateAttributes(command);
             result.BusinessRules.Add(rules);
 
@@ -25,7 +35,7 @@
                 return result;
             }
 
-            // 2. execute all validators
+            // 3. execute all validators
             IEnumerable<IValidator<TCommand>> validators = command.ExecutionContext.Services
                 .Resolve<IEnumerable<IValidator<TCommand>>>();
 
@@ -41,7 +51,7 @@
                 return result;
             }
 
-            // 3. execute handler
+            // 4. execute handler
             ICommandHandler<TCommand> handler = command.ExecutionContext.Services
                 .Resolve<ICommandHandler<TCommand>>();
 
@@ -57,6 +67,7 @@
             }
 
             result.BusinessRules.Add(handler.Result.BusinessRules);
+            result.PermissionRules.Add(handler.Result.PermissionRules);
             result.Exception = handler.Result.Exception;
             result.ReturnValue = handler.Result.ReturnValue;
 
