@@ -5,6 +5,7 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
+    using BL.Core.Logging;
     using BL.Core.Query;
     using BL.Queries;
     using BL.Validators;
@@ -27,6 +28,7 @@
             builder.RegisterType<BasicExecutionContext>().As<IExecutionContext>();
             builder.RegisterType<BasicUnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<TournamentzModelContext>().As<DbContext>();
+            //builder.RegisterType<NullLogger>().As<ILogger>();
 
             builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
             builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
