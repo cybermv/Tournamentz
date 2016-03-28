@@ -2,10 +2,11 @@
 {
     using Command;
     using Query;
+    using Query.Interface;
 
     public interface ILogger
     {
-        void LogQuery<TQuery>(IExecutionContext context, IQueryResult<TQuery> result)
+        void LogQuery<TQuery>(IExecutionContext context, IQueryResult result)
             where TQuery : IQuery;
 
         void LogCommand<TCommand>(TCommand command, ICommandResult result)

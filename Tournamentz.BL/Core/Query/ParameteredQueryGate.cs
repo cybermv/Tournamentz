@@ -8,10 +8,10 @@
     using System.Linq;
     using Validation;
 
-    public class BasicQueryGate<TQuery> : IQueryGate<TQuery>
-        where TQuery : IQuery
+    public class ParameteredQueryGate<TQuery, TParam> : IParameteredQueryGate<TQuery, TParam>
+        where TQuery : IQuery, IParameteredQueryHandler<TQuery, TParam>
     {
-        public IQueryResult<TQuery> Query(IExecutionContext context)
+        public virtual IQueryResult<TQuery> Query(IExecutionContext context, TParam parameter)
         {
             QueryResult<TQuery> result = new QueryResult<TQuery>();
 
@@ -26,12 +26,12 @@
             }
 
             // 2. execute handler
-            IQueryHandler<TQuery> handler = context.Services
-                .Resolve<IQueryHandler<TQuery>>();
+            IParameteredQueryHandler<TQuery, TParam> handler = context.Services
+                .Resolve<IParameteredQueryHandler<TQuery, TParam>>();
 
             try
             {
-                result.Query = handler.Query(context);
+                result.Query = handler.Query(context, parameter);
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@
             return result;
         }
 
-        public IQueryResult<TQuery> Create(IExecutionContext context)
+        public virtual IQueryResult<TQuery> Create(IExecutionContext context)
         {
             QueryResult<TQuery> result = new QueryResult<TQuery>();
 

@@ -7,6 +7,7 @@
     using BL.Core.Command;
     using BL.Core.Logging;
     using BL.Core.Query;
+    using BL.Core.Query.Interface;
     using BL.Queries;
     using BL.Validators;
     using DAL;
@@ -39,6 +40,7 @@
             builder.RegisterType<BasicQueryGate<PlayerQueries.Dropdown>>().As<IQueryGate<PlayerQueries.Dropdown>>();
             builder.RegisterType<PlayerQueries.All>().AsImplementedInterfaces();
             builder.RegisterType<PlayerQueries.Dropdown>().AsImplementedInterfaces();
+            builder.RegisterType<PlayerQueries.FilteredByName>().AsImplementedInterfaces();
 
             IContainer container = builder.Build();
 
@@ -48,6 +50,13 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
+                var gate = new ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam>();
+
+                IQueryResult<PlayerQueries.FilteredByName> result1 = gate.Query(context,
+                    new PlayerQueries.FilteredByName.NameParam { Name = "ti" });
+
+                List<PlayerQueries.FilteredByName> res = result1.Query.ToList();
+
                 ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
                 context.User = manager.Find("prvi.user", "prvi.user");
 

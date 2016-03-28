@@ -1,18 +1,20 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
     using Command;
-    using Query;
+    using Query.Interface;
 
     /// <summary>
     /// A logger that discards all log entries
     /// </summary>
     public class NullLogger : ILogger
     {
-        public void LogQuery<TQuery>(IExecutionContext context, IQueryResult<TQuery> result) where TQuery : IQuery
+        public void LogQuery<TQuery>(IExecutionContext context, IQueryResult result)
+           where TQuery : IQuery
         {
         }
 
-        public void LogCommand<TCommand>(TCommand command, ICommandResult result) where TCommand : ICommand
+        public void LogCommand<TCommand>(TCommand command, ICommandResult result)
+           where TCommand : ICommand
         {
         }
 

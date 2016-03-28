@@ -1,4 +1,4 @@
-﻿namespace Tournamentz.BL.Core.Query
+﻿namespace Tournamentz.BL.Core.Query.Interface
 {
     public interface IKeyValueQuery : IBasicQuery
     {

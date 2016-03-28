@@ -1,5 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Query
 {
+    using Interface;
     using System;
 
     public abstract class KeyValueQueryBase<TQuery> : BasicQueryBase<TQuery>, IKeyValueQuery

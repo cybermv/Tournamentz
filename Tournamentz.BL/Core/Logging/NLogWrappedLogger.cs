@@ -4,7 +4,7 @@
     using Command;
     using NLog;
     using NLog.Config;
-    using Query;
+    using Query.Interface;
     using System;
 
     public sealed class NLogWrappedLogger : ILogger
@@ -30,7 +30,8 @@
             this._innerLogger = LogManager.GetLogger("Common");
         }
 
-        public void LogQuery<TQuery>(IExecutionContext context, IQueryResult<TQuery> result) where TQuery : IQuery
+        public void LogQuery<TQuery>(IExecutionContext context, IQueryResult result)
+            where TQuery : IQuery
         {
             // TODO: write to log
             //this._innerLogger.Info("LogQuery - " + result);
@@ -38,7 +39,8 @@
             this._innerLogger.Log(eventInfo);
         }
 
-        public void LogCommand<TCommand>(TCommand command, ICommandResult result) where TCommand : ICommand
+        public void LogCommand<TCommand>(TCommand command, ICommandResult result)
+            where TCommand : ICommand
         {
             // TODO: write to log
             //this._innerLogger.Info("LogCommand - " + result);

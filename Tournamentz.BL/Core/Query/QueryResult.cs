@@ -1,5 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Query
 {
+    using Interface;
     using Rule;
     using System;
     using System.Linq;
@@ -38,6 +39,8 @@
                 return QueryResultStatus.Success;
             }
         }
+
+        IQueryable IQueryResult.Query { get { return this.Query; } }
 
         public IQueryable<TQuery> Query { get; set; }
 

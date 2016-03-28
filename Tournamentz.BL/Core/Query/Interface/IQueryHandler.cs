@@ -1,4 +1,4 @@
-﻿namespace Tournamentz.BL.Core.Query
+﻿namespace Tournamentz.BL.Core.Query.Interface
 {
     using System.Linq;
 
@@ -6,7 +6,5 @@
         where TQuery : IQuery
     {
         IQueryable<TQuery> Query(IExecutionContext context);
-
-        TQuery Create(IExecutionContext context);
     }
 }

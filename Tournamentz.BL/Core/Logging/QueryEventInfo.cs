@@ -1,13 +1,13 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
     using NLog;
-    using Query;
+    using Query.Interface;
     using System;
 
     public sealed class QueryEventInfo<TQuery> : LogEventInfo
         where TQuery : IQuery
     {
-        public QueryEventInfo(IExecutionContext context, IQueryResult<TQuery> result)
+        public QueryEventInfo(IExecutionContext context, IQueryResult result)
         {
             this.Level = LogLevel.Info;
             this.Parameters = new object[] { result };

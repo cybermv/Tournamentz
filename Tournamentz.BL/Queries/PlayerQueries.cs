@@ -41,5 +41,27 @@
                     });
             }
         }
+
+        public class FilteredByName : ParameteredQueryBase<FilteredByName, FilteredByName.NameParam>
+        {
+            public class NameParam
+            {
+                public string Name { get; set; }
+            }
+
+            public override IQueryable<FilteredByName> Query(IExecutionContext context, NameParam parameter)
+            {
+                return context.UnitOfWork.Repository<Player>().Query
+                    .Where(p => p.Name.Contains(parameter.Name) ||
+                                p.Surname.Contains(parameter.Name))
+                    .Select(p => new FilteredByName
+                    {
+                        Id = p.Id,
+                        FriendlyName = p.Name + " " + p.Surname
+                    });
+            }
+
+            public string FriendlyName { get; set; }
+        }
     }
 }
