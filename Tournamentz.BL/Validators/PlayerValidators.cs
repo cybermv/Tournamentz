@@ -16,7 +16,7 @@
 
                 if (command.Nickname.Length <= 3)
                 {
-                    rules.Add(new BusinessRule(true, "Username mora biti duži od 3 znaka"));
+                    rules.Add(new BusinessRule(false, "Username mora biti duži od 3 znaka"));
                 }
 
                 return rules;

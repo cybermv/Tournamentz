@@ -5,6 +5,7 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
+    using BL.Core.Command.Interfaces;
     using BL.Core.Logging;
     using BL.Core.Query;
     using BL.Core.Query.Interface;
@@ -29,7 +30,7 @@
             builder.RegisterType<BasicExecutionContext>().As<IExecutionContext>();
             builder.RegisterType<BasicUnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<TournamentzModelContext>().As<DbContext>();
-            //builder.RegisterType<NullLogger>().As<ILogger>();
+            builder.RegisterType<NLogWrappedLogger>().As<ILogger>();
 
             builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
             builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
@@ -97,13 +98,12 @@
 
                 ICommandResult updateResult = updateGate.Run(update);
 
-                Console.WriteLine(updateResult.ToString());
-
                 Player rv = context.UnitOfWork.Repository<Player>().FindById((Guid)result.ReturnValue);
 
                 context.UnitOfWork.Rollback();
             }
 
+            Console.WriteLine("Finished.");
             Console.ReadKey();
         }
     }

@@ -1,6 +1,8 @@
 ﻿namespace Tournamentz.BL.Core.Command
 {
     using Autofac;
+    using Interfaces;
+    using Logging;
     using Rule;
     using System;
     using System.Collections.Generic;
@@ -13,6 +15,7 @@
     {
         public ICommandResult Run(TCommand command)
         {
+            ILogger logger = command.ExecutionContext.Services.Resolve<ILogger>();
             CommandResult result = new CommandResult();
 
             // 1. validate RequiresRole attributes
@@ -21,7 +24,7 @@
 
             if (result.Status != CommandResultStatus.Success)
             {
-                // TODO: log broken permission rules
+                logger.LogCommand<TCommand>(command, result);
                 return result;
             }
 
@@ -31,7 +34,7 @@
 
             if (result.Status != CommandResultStatus.Success)
             {
-                // TODO: log broken rules
+                logger.LogCommand<TCommand>(command, result);
                 return result;
             }
 
@@ -47,7 +50,7 @@
 
             if (result.Status != CommandResultStatus.Success)
             {
-                // TODO: log broken rules
+                logger.LogCommand<TCommand>(command, result);
                 return result;
             }
 
@@ -61,8 +64,8 @@
             }
             catch (Exception ex)
             {
-                // TODO: log exception
                 result.Exception = ex;
+                logger.LogCommand<TCommand>(command, result);
                 return result;
             }
 
@@ -71,7 +74,7 @@
             result.Exception = handler.Result.Exception;
             result.ReturnValue = handler.Result.ReturnValue;
 
-            // TODO: log success/broken rules
+            logger.LogCommand<TCommand>(command, result);
             return result;
         }
 

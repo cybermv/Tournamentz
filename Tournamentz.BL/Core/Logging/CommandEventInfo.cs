@@ -1,23 +1,22 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
-    using Command;
+    using Command.Interfaces;
     using NLog;
     using System;
 
-    public sealed class CommandEventInfo<TCommand> : LogEventInfo
-        where TCommand : ICommand
+    public sealed class CommandEventInfo : LogEventInfo
     {
-        public CommandEventInfo(TCommand command, ICommandResult result)
+        public CommandEventInfo(ICommand command, ICommandResult result)
         {
             this.Level = LogLevel.Info;
             this.Parameters = new object[] { command, result };
             this.Message = "Command execution - {0}";
-            this.LoggerName = GetFriendlyCommandName();
+            this.LoggerName = GetFriendlyCommandName(command);
         }
 
-        private static string GetFriendlyCommandName()
+        private static string GetFriendlyCommandName(ICommand command)
         {
-            Type commandType = typeof(TCommand);
+            Type commandType = command.GetType();
 
             return commandType.DeclaringType != null
                 ? $"{commandType.DeclaringType.Name}.{commandType.Name}"

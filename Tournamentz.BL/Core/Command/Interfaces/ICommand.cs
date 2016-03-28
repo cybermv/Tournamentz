@@ -1,4 +1,4 @@
-﻿namespace Tournamentz.BL.Core.Command
+﻿namespace Tournamentz.BL.Core.Command.Interfaces
 {
     public interface ICommand
     {

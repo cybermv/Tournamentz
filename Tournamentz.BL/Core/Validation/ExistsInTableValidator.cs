@@ -2,6 +2,7 @@
 {
     using Attribute;
     using Command;
+    using Command.Interfaces;
     using Rule;
     using System;
     using System.Linq;
@@ -46,7 +47,7 @@
 
                 // TODO: localize
                 rules.Add(new BusinessRule(
-                    foundEntity == null,
+                    foundEntity != null,
                     string.Format("Polje {0} je obavezno", propToValidate.Property.Name),
                     propToValidate.Property.Name));
             }

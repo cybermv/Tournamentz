@@ -1,7 +1,7 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
     using Autofac;
-    using Command;
+    using Command.Interfaces;
     using NLog;
     using NLog.Config;
     using Query.Interface;
@@ -35,7 +35,7 @@
         {
             // TODO: write to log
             //this._innerLogger.Info("LogQuery - " + result);
-            LogEventInfo eventInfo = new QueryEventInfo<TQuery>(context, result);
+            LogEventInfo eventInfo = new QueryEventInfo(context, result);
             this._innerLogger.Log(eventInfo);
         }
 
@@ -45,7 +45,7 @@
             // TODO: write to log
             //this._innerLogger.Info("LogCommand - " + result);
 
-            LogEventInfo eventInfo = new CommandEventInfo<TCommand>(command, result);
+            LogEventInfo eventInfo = new CommandEventInfo(command, result);
             this._innerLogger.Log(eventInfo);
         }
 

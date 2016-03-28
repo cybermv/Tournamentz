@@ -2,6 +2,7 @@
 {
     using Autofac;
     using Interface;
+    using Logging;
     using Rule;
     using System;
     using System.Collections.Generic;
@@ -13,6 +14,7 @@
     {
         public virtual IQueryResult<TQuery> Query(IExecutionContext context, TParam parameter)
         {
+            ILogger logger = context.Services.Resolve<ILogger>();
             QueryResult<TQuery> result = new QueryResult<TQuery>();
 
             // 1. validate RequiresRole attributes
@@ -21,7 +23,7 @@
 
             if (result.Status != QueryResultStatus.Success)
             {
-                // TODO: log broken permission rules
+                logger.LogQuery<TQuery>(context, result);
                 return result;
             }
 
@@ -35,17 +37,18 @@
             }
             catch (Exception ex)
             {
-                // TODO: log exception
                 result.Exception = ex;
+                logger.LogQuery<TQuery>(context, result);
                 return result;
             }
 
-            // TODO: log success/broken rules
+            logger.LogQuery<TQuery>(context, result);
             return result;
         }
 
         public virtual IQueryResult<TQuery> Create(IExecutionContext context)
         {
+            ILogger logger = context.Services.Resolve<ILogger>();
             QueryResult<TQuery> result = new QueryResult<TQuery>();
 
             // 1. execute handler
@@ -59,12 +62,12 @@
             }
             catch (Exception ex)
             {
-                // TODO: log exception
                 result.Exception = ex;
+                logger.LogQuery<TQuery>(context, result);
                 return result;
             }
 
-            // TODO: log success/broken rules
+            logger.LogQuery<TQuery>(context, result);
             return result;
         }
     }

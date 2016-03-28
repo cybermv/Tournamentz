@@ -1,6 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
-    using Command;
+    using Command.Interfaces;
     using Query.Interface;
 
     /// <summary>

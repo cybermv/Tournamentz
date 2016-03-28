@@ -81,10 +81,10 @@
     <Compile Include="Core\Command\CommandHandlerBase.cs" />
     <Compile Include="Core\Command\CommandResult.cs" />
     <Compile Include="Core\Command\CommandResultStatus.cs" />
-    <Compile Include="Core\Command\ICommand.cs" />
-    <Compile Include="Core\Command\ICommandGate.cs" />
-    <Compile Include="Core\Command\ICommandHandler.cs" />
-    <Compile Include="Core\Command\ICommandResult.cs" />
+    <Compile Include="Core\Command\Interfaces\ICommand.cs" />
+    <Compile Include="Core\Command\Interfaces\ICommandGate.cs" />
+    <Compile Include="Core\Command\Interfaces\ICommandHandler.cs" />
+    <Compile Include="Core\Command\Interfaces\ICommandResult.cs" />
     <Compile Include="Core\IExecutionContext.cs" />
     <Compile Include="Core\Logging\CommandEventInfo.cs" />
     <Compile Include="Core\Logging\ILogger.cs" />

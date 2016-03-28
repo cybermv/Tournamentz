@@ -24,7 +24,7 @@
 
                 // TODO: localize
                 rules.Add(new BusinessRule(
-                    role == null,
+                    role != null,
                     "Za akciju je potrebna rola {0}"));
             }
 

@@ -13,6 +13,7 @@
         public QueryResult()
         {
             this.PermissionRules = new BusinessRuleCollection();
+            this.Query = Enumerable.Empty<TQuery>().AsQueryable();
         }
 
         public BusinessRuleCollection PermissionRules { get; set; }

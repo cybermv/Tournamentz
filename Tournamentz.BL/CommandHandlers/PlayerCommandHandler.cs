@@ -2,6 +2,7 @@
 {
     using Commands;
     using Core.Command;
+    using Core.Command.Interfaces;
     using DAL.Core;
     using DAL.Entity;
 

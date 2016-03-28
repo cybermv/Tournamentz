@@ -1,7 +1,7 @@
-﻿namespace Tournamentz.BL.Core.Command
+﻿namespace Tournamentz.BL.Core.Command.Interfaces
 {
-    using Rule;
     using System;
+    using Rule;
 
     public interface ICommandResult
     {
