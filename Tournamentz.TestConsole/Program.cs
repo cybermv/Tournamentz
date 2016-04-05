@@ -5,7 +5,6 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
-    using BL.Core.Command.Interfaces;
     using BL.Core.Logging;
     using BL.Core.Query;
     using BL.Core.Query.Interface;
@@ -20,6 +19,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using BL.Core.Command.Interface;
 
     internal class Program
     {

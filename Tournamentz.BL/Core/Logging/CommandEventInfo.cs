@@ -1,8 +1,8 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
-    using Command.Interfaces;
     using NLog;
     using System;
+    using Command.Interface;
 
     public sealed class CommandEventInfo : LogEventInfo
     {

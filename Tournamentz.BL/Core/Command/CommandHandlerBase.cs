@@ -1,6 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Command
 {
-    using Interfaces;
+    using Interface;
     using Rule;
 
     public abstract class CommandHandlerBase

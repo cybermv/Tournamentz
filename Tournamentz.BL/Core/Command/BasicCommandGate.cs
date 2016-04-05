@@ -1,13 +1,13 @@
 ﻿namespace Tournamentz.BL.Core.Command
 {
     using Autofac;
-    using Interfaces;
     using Logging;
     using Rule;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Interface;
     using Validation;
 
     public class BasicCommandGate<TCommand> : ICommandGate<TCommand>

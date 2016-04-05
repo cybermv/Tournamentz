@@ -1,7 +1,7 @@
 ﻿namespace Tournamentz.BL.Core.Validation
 {
     using Command;
-    using Command.Interfaces;
+    using Command.Interface;
     using Rule;
 
     public interface IValidator<TCommand>

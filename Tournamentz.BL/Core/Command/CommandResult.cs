@@ -3,7 +3,7 @@
     using Rule;
     using System;
     using System.Linq;
-    using Interfaces;
+    using Interface;
 
     public class CommandResult : ICommandResult
     {
