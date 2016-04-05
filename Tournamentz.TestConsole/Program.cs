@@ -5,6 +5,7 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
+    using BL.Core.Command.Interface;
     using BL.Core.Logging;
     using BL.Core.Query;
     using BL.Core.Query.Interface;
@@ -19,7 +20,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
-    using BL.Core.Command.Interface;
+    using System.Runtime.InteropServices;
 
     internal class Program
     {
@@ -51,7 +52,10 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                var gate = new ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam>();
+                ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam> gate =
+                    new ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam>();
+
+                Console.WriteLine("Test edit");
 
                 IQueryResult<PlayerQueries.FilteredByName> result1 = gate.Query(context,
                     new PlayerQueries.FilteredByName.NameParam { Name = "ti" });
