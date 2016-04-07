@@ -6,7 +6,7 @@
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command;
-    using BL.Core.Command.Interfaces;
+    using BL.Core.Command.Interface;
     using BL.Core.Logging;
     using BL.Core.Query;
     using BL.Core.Query.Interface;
