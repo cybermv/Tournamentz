@@ -2,11 +2,11 @@
 {
     using Attribute;
     using Command;
-    using Command.Interfaces;
     using Rule;
     using System;
     using System.Linq;
     using System.Reflection;
+    using Command.Interface;
 
     public static class ExistsInTableValidator
     {

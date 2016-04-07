@@ -1,11 +1,11 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
     using Autofac;
-    using Command.Interfaces;
     using NLog;
     using NLog.Config;
     using Query.Interface;
     using System;
+    using Command.Interface;
 
     public sealed class NLogWrappedLogger : ILogger
     {

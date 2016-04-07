@@ -2,7 +2,7 @@
 {
     using Commands;
     using Core.Command;
-    using Core.Command.Interfaces;
+    using Core.Command.Interface;
     using DAL.Core;
     using DAL.Entity;
 

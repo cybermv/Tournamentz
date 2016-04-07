@@ -1,6 +1,6 @@
 ﻿namespace Tournamentz.BL.Core.Logging
 {
-    using Command.Interfaces;
+    using Command.Interface;
     using Query.Interface;
 
     public interface ILogger

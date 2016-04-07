@@ -1,4 +1,4 @@
-﻿namespace Tournamentz.BL.Core.Command.Interfaces
+﻿namespace Tournamentz.BL.Core.Command.Interface
 {
     using System;
     using Rule;
