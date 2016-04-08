@@ -69,6 +69,7 @@
     <Compile Include="Entity\TournamentRound.cs" />
     <Compile Include="Entity\TournamentRoundParticipant.cs" />
     <Compile Include="Entity\TournamentType.cs" />
+    <Compile Include="Identity\ApplicationRoleStore.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\ApplicationUserStore.cs" />
     <Compile Include="Migrations\201603131413376_RemovedUnusedEntities.cs" />

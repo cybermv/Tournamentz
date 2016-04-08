@@ -1,6 +1,8 @@
 ﻿namespace Tournamentz.Host
 {
     using Autofac;
+    using Autofac.Builder;
+    using Autofac.Core;
     using Autofac.Integration.Mvc;
     using Autofac.Integration.WebApi;
     using BL.CommandHandlers;
@@ -15,7 +17,11 @@
     using BL.Validators;
     using DAL;
     using DAL.Core;
+    using DAL.Identity;
+    using Identity;
+    using Microsoft.Owin.Security;
     using System.Data.Entity;
+    using System.Web;
 
     public static class DependencyInjectionConfig
     {
@@ -74,6 +80,26 @@
             builder.RegisterType<NLogWrappedLogger>()
                 .As<ILogger>()
                 .SingleInstance();
+
+            // there is only one user store per request
+            builder.RegisterType<ApplicationUserStore>()
+                .AsSelf()
+                .InstancePerRequest();
+
+            // there is only one user manager per request
+            builder.RegisterType<DAL.Identity.ApplicationUserManager>()
+                .AsSelf()
+                .OnActivated(args => args.Instance.Configure())
+                .InstancePerRequest();
+
+            // TODO: figure out
+            //builder.RegisterInstance<IAuthenticationManager>(c => HttpContext.Current.GetOwinContext().Authentication)
+            //    .As<IAuthenticationManager>();
+
+            // there is only one sign in manager per request
+            builder.RegisterType<ApplicationSignInManager>()
+                .AsSelf()
+                .InstancePerRequest();
 
             // register BL components
             // TODO: move to Tournamentz.BL

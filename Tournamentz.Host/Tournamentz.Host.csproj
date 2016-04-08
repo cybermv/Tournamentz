@@ -201,9 +201,12 @@
     <Compile Include="Api\Controllers\ValuesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
+    <Compile Include="Identity\ApplicationUserManagerConfiguration.cs" />
+    <Compile Include="Identity\EmailService.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Identity\SmsService.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
     <Compile Include="App_Start\Startup.Autofac.cs" />

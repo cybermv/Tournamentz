@@ -9,6 +9,7 @@
     public class PlayerCommandHandler : CommandHandlerBase
         , ICommandHandler<PlayerCommands.Create>
         , ICommandHandler<PlayerCommands.Update>
+        , ICommandHandler<PlayerCommands.Delete>
     {
         public void Handle(PlayerCommands.Create command)
         {
@@ -35,6 +36,13 @@
             player.Surname = command.Surname;
 
             playerRepo.Update(player);
+        }
+
+        public void Handle(PlayerCommands.Delete command)
+        {
+            IRepository<Player> playerRepo = command.ExecutionContext.UnitOfWork.Repository<Player>();
+
+            playerRepo.Delete(command.Id);
         }
     }
 }

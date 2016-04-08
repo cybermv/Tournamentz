@@ -1,14 +1,14 @@
 ﻿namespace Tournamentz.DAL.Identity
 {
-    using Core;
     using Entity;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
 
     public class ApplicationUserManager : UserManager<ApplicationUser, Guid>
     {
-        public ApplicationUserManager(IUnitOfWork uow)
-            : base(new ApplicationUserStore(uow.Context))
+        public ApplicationUserManager(DbContext context)
+            : base(new ApplicationUserStore(context))
         {
         }
     }

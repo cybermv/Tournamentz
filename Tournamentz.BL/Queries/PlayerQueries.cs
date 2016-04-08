@@ -28,6 +28,7 @@
             public string NameSurname { get; set; }
         }
 
+        [RequiresRole(TournamentzRoles.Admin)]
         public class Dropdown : KeyValueQueryBase<Dropdown>
         {
             public override IQueryable<Dropdown> Query(IExecutionContext context)
@@ -42,18 +43,14 @@
             }
         }
 
-        public class FilteredByName : ParameteredQueryBase<FilteredByName, FilteredByName.NameParam>
+        [RequiresRole(TournamentzRoles.Admin)]
+        public class FilteredByName : ParameteredQueryBase<FilteredByName, string>
         {
-            public class NameParam
-            {
-                public string Name { get; set; }
-            }
-
-            public override IQueryable<FilteredByName> Query(IExecutionContext context, NameParam parameter)
+            public override IQueryable<FilteredByName> Query(IExecutionContext context, string nameFilter)
             {
                 return context.UnitOfWork.Repository<Player>().Query
-                    .Where(p => p.Name.Contains(parameter.Name) ||
-                                p.Surname.Contains(parameter.Name))
+                    .Where(p => p.Name.Contains(nameFilter) ||
+                                p.Surname.Contains(nameFilter))
                     .Select(p => new FilteredByName
                     {
                         Id = p.Id,

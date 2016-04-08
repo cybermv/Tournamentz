@@ -20,7 +20,6 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
-    using System.Runtime.InteropServices;
 
     internal class Program
     {
@@ -52,17 +51,16 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam> gate =
-                    new ParameteredQueryGate<PlayerQueries.FilteredByName, PlayerQueries.FilteredByName.NameParam>();
+                ParameteredQueryGate<PlayerQueries.FilteredByName, string> gate =
+                    new ParameteredQueryGate<PlayerQueries.FilteredByName, string>();
 
                 Console.WriteLine("Test edit");
 
-                IQueryResult<PlayerQueries.FilteredByName> result1 = gate.Query(context,
-                    new PlayerQueries.FilteredByName.NameParam { Name = "ti" });
+                IQueryResult<PlayerQueries.FilteredByName> result1 = gate.Query(context, "ti");
 
                 List<PlayerQueries.FilteredByName> res = result1.Query.ToList();
 
-                ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
+                ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork.Context);
                 context.User = manager.Find("prvi.user", "prvi.user");
 
                 IQueryGate<PlayerQueries.All> playersGate = context.Services
