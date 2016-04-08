@@ -201,10 +201,11 @@
     <Compile Include="Api\Controllers\ValuesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Identity\ApplicationSignInManager.cs" />
     <Compile Include="Identity\ApplicationUserManagerConfiguration.cs" />
     <Compile Include="Identity\EmailService.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Identity\SmsService.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -221,7 +222,6 @@
     </Compile>
     <Compile Include="Identity\AuthenticationManagerProvider.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

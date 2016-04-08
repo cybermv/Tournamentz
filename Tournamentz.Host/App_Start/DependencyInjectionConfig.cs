@@ -84,7 +84,7 @@
                 .InstancePerRequest();
 
             // there is only one user manager per request
-            builder.RegisterType<DAL.Identity.ApplicationUserManager>()
+            builder.RegisterType<ApplicationUserManager>()
                 .AsSelf()
                 .OnActivated(args => args.Instance.Configure())
                 .InstancePerRequest();
