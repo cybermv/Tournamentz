@@ -2,6 +2,7 @@
 {
     using Autofac;
     using Autofac.Integration.Mvc;
+    using Autofac.Integration.WebApi;
     using BL.CommandHandlers;
     using BL.Commands;
     using BL.Core;
@@ -47,6 +48,8 @@
             builder.RegisterSource(new ViewRegistrationSource());
 
             builder.RegisterFilterProvider();
+
+            builder.RegisterApiControllers(typeof(DependencyInjectionConfig).Assembly);
         }
 
         private static void Register(ContainerBuilder builder)
