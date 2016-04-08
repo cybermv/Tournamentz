@@ -1,8 +1,6 @@
 ﻿namespace Tournamentz.Host
 {
     using Autofac;
-    using Autofac.Builder;
-    using Autofac.Core;
     using Autofac.Integration.Mvc;
     using Autofac.Integration.WebApi;
     using BL.CommandHandlers;
@@ -21,7 +19,6 @@
     using Identity;
     using Microsoft.Owin.Security;
     using System.Data.Entity;
-    using System.Web;
 
     public static class DependencyInjectionConfig
     {
@@ -92,9 +89,9 @@
                 .OnActivated(args => args.Instance.Configure())
                 .InstancePerRequest();
 
-            // TODO: figure out
-            //builder.RegisterInstance<IAuthenticationManager>(c => HttpContext.Current.GetOwinContext().Authentication)
-            //    .As<IAuthenticationManager>();
+            // the authentication manager cannot be bound to a request scope :(
+            builder.Register(AuthenticationManagerProvider.Resolve)
+                .As<IAuthenticationManager>();
 
             // there is only one sign in manager per request
             builder.RegisterType<ApplicationSignInManager>()

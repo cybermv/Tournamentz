@@ -1,9 +1,13 @@
 ﻿namespace Tournamentz.Host.Controllers
 {
+    using Autofac;
+    using Autofac.Integration.Mvc;
     using BL.Core;
     using Core;
     using DAL;
     using DAL.Core;
+    using Microsoft.Owin.Security;
+    using System.Web;
     using System.Web.Mvc;
 
     public class HomeController : TournamentzControllerBase
