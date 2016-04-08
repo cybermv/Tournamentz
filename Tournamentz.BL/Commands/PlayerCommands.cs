@@ -25,5 +25,11 @@
 
             public string Surname { get; set; }
         }
+
+        public class Delete : CommandBase
+        {
+            [ExistsInTable(typeof(Player))]
+            public Guid Id { get; set; }
+        }
     }
 }

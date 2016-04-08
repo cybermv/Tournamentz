@@ -51,7 +51,7 @@
             roleRepo.Insert(adminRole);
             roleRepo.Insert(userRole);
 
-            ApplicationUserManager userManager = new ApplicationUserManager(uow);
+            ApplicationUserManager userManager = new ApplicationUserManager(context);
 
             ApplicationUser adminUser = new ApplicationUser
             {
