@@ -15,9 +15,6 @@
     using BL.Validators;
     using DAL;
     using DAL.Core;
-    using DAL.Identity;
-    using Identity;
-    using Microsoft.Owin.Security;
     using System.Data.Entity;
 
     public static class DependencyInjectionConfig
@@ -78,33 +75,16 @@
                 .As<ILogger>()
                 .SingleInstance();
 
-            // there is only one user store per request
-            builder.RegisterType<ApplicationUserStore>()
-                .AsSelf()
-                .InstancePerRequest();
-
-            // there is only one user manager per request
-            builder.RegisterType<ApplicationUserManager>()
-                .AsSelf()
-                .OnActivated(args => args.Instance.Configure())
-                .InstancePerRequest();
-
-            // the authentication manager cannot be bound to a request scope :(
-            builder.Register(AuthenticationManagerProvider.Resolve)
-                .As<IAuthenticationManager>();
-
-            // there is only one sign in manager per request
-            builder.RegisterType<ApplicationSignInManager>()
-                .AsSelf()
-                .InstancePerRequest();
-
             // register BL components
             // TODO: move to Tournamentz.BL
 
             builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
+            builder.RegisterType<BasicCommandGate<PlayerCommands.CreateOrRetrieve>>().As<ICommandGate<PlayerCommands.CreateOrRetrieve>>();
             builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
+            builder.RegisterType<BasicCommandGate<PlayerCommands.Delete>>().As<ICommandGate<PlayerCommands.Delete>>();
             builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
             builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
+            builder.RegisterType<PlayerValidators.CannotDeleteUsedPlayer>().AsImplementedInterfaces();
 
             builder.RegisterType<BasicQueryGate<PlayerQueries.All>>().As<IQueryGate<PlayerQueries.All>>();
             builder.RegisterType<BasicQueryGate<PlayerQueries.Dropdown>>().As<IQueryGate<PlayerQueries.Dropdown>>();

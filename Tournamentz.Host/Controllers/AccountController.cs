@@ -1,34 +1,37 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Tournamentz.Host.Models;
-
-namespace Tournamentz.Host.Controllers
+﻿namespace Tournamentz.Host.Controllers
 {
+    using BL.Core;
+    using Core;
     using DAL.Entity;
     using DAL.Identity;
     using Identity;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Models;
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
 
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : TournamentzControllerBase
     {
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(IExecutionContext executionContext)
+            : base(executionContext)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            this.UserManager = new ApplicationUserManager(executionContext.UnitOfWork).Configure();
+            this.AuthenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
+            this.SignInManager = new ApplicationSignInManager(this.UserManager, this.AuthenticationManager);
         }
 
-        public ApplicationSignInManager SignInManager { get; private set; }
-
         public ApplicationUserManager UserManager { get; private set; }
+
+        public IAuthenticationManager AuthenticationManager { get; private set; }
+
+        public ApplicationSignInManager SignInManager { get; private set; }
 
         //
         // GET: /Account/Login
@@ -111,6 +114,7 @@ namespace Tournamentz.Host.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
 
+                case SignInStatus.RequiresVerification:
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
@@ -135,7 +139,12 @@ namespace Tournamentz.Host.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = model.Username,
+                    Email = model.Email
+                };
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -147,12 +156,14 @@ namespace Tournamentz.Host.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    this.Commit();
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            this.Rollback();
             return View(model);
         }
 
@@ -355,7 +366,13 @@ namespace Tournamentz.Host.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = info.DefaultUserName,
+                    Email = model.Email
+                };
+
                 IdentityResult result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -363,6 +380,7 @@ namespace Tournamentz.Host.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        this.Commit();
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -370,6 +388,7 @@ namespace Tournamentz.Host.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
+            this.Rollback();
             return View(model);
         }
 
@@ -395,14 +414,6 @@ namespace Tournamentz.Host.Controllers
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
         private void AddErrors(IdentityResult result)
         {

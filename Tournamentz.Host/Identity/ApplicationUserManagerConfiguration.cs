@@ -9,7 +9,7 @@
 
     public static class ApplicationUserManagerConfiguration
     {
-        public static void Configure(this ApplicationUserManager manager)
+        public static ApplicationUserManager Configure(this ApplicationUserManager manager)
         {
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser, Guid>(manager)
@@ -54,6 +54,8 @@
                 manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
+
+            return manager;
         }
     }
 }

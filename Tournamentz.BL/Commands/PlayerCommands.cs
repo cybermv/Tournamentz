@@ -16,6 +16,11 @@
             public string Surname { get; set; }
         }
 
+        public class CreateOrRetrieve : CommandBase
+        {
+            public string Nickname { get; set; }
+        }
+
         public class Update : CommandBase
         {
             [ExistsInTable(typeof(Player))]

@@ -1,33 +1,38 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Tournamentz.Host.Models;
-
-namespace Tournamentz.Host.Controllers
+﻿namespace Tournamentz.Host.Controllers
 {
+    using BL.Core;
+    using Core;
     using DAL.Entity;
     using DAL.Identity;
     using Extensions;
     using Identity;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Models;
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
 
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : TournamentzControllerBase
     {
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(IExecutionContext executionContext)
+            : base(executionContext)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            this.UserManager = new ApplicationUserManager(executionContext.UnitOfWork).Configure();
+            this.AuthenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
+            this.SignInManager = new ApplicationSignInManager(this.UserManager, this.AuthenticationManager);
         }
 
-        public ApplicationSignInManager SignInManager { get; private set; }
-
         public ApplicationUserManager UserManager { get; private set; }
+
+        public IAuthenticationManager AuthenticationManager { get; private set; }
+
+        public ApplicationSignInManager SignInManager { get; private set; }
 
         //
         // GET: /Manage/Index
@@ -303,14 +308,6 @@ namespace Tournamentz.Host.Controllers
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
         private void AddErrors(IdentityResult result)
         {
