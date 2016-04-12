@@ -37,5 +37,11 @@
 
             return result.ReturnValue;
         }
+
+        public TResult RunCommand<TCommand, TResult>(TCommand command)
+            where TCommand : ICommand
+        {
+            return (TResult) this.RunCommand(command);
+        }
     }
 }

@@ -72,7 +72,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlers\PlayerCommandHandler.cs" />
+    <Compile Include="CommandHandlers\TeamCommandHandler.cs" />
+    <Compile Include="CommandHandlers\TeamPlayerCommandHandler.cs" />
+    <Compile Include="CommandHandlers\TournamentCommandHandler.cs" />
     <Compile Include="Commands\PlayerCommands.cs" />
+    <Compile Include="Commands\TeamCommands.cs" />
+    <Compile Include="Commands\TeamPlayerCommands.cs" />
+    <Compile Include="Commands\TournamentCommands.cs" />
     <Compile Include="Core\Attribute\ExistsInTableAttribute.cs" />
     <Compile Include="Core\Attribute\RequiresRoleAttribute.cs" />
     <Compile Include="Core\BasicExecutionContext.cs" />
@@ -118,6 +124,7 @@
     <Compile Include="Queries\PlayerQueries.cs" />
     <Compile Include="TournamentzRoles.cs" />
     <Compile Include="Validators\PlayerValidators.cs" />
+    <Compile Include="Validators\TournamentValidators.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

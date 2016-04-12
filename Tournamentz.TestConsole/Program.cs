@@ -60,7 +60,7 @@
 
                 List<PlayerQueries.FilteredByName> res = result1.Query.ToList();
 
-                ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork.Context);
+                ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
                 context.User = manager.Find("prvi.user", "prvi.user");
 
                 IQueryGate<PlayerQueries.All> playersGate = context.Services
