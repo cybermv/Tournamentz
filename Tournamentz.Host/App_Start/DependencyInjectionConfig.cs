@@ -83,7 +83,7 @@
             builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
             builder.RegisterType<BasicCommandGate<PlayerCommands.Delete>>().As<ICommandGate<PlayerCommands.Delete>>();
             builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
-            builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
+            builder.RegisterType<PlayerValidators.UniqueUsernameValidation>().AsImplementedInterfaces();
             builder.RegisterType<PlayerValidators.CannotDeleteUsedPlayer>().AsImplementedInterfaces();
 
             builder.RegisterType<BasicQueryGate<PlayerQueries.All>>().As<IQueryGate<PlayerQueries.All>>();

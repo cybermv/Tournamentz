@@ -20,34 +20,13 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using BL;
 
     internal class Program
     {
         private static void Main()
         {
-            // TODO: move dependencies in main host project
-            ContainerBuilder builder = new ContainerBuilder();
-            builder.RegisterType<BasicExecutionContext>().As<IExecutionContext>();
-            builder.RegisterType<BasicUnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<TournamentzModelContext>().As<DbContext>();
-            builder.RegisterType<NLogWrappedLogger>().As<ILogger>();
-
-            builder.RegisterType<BasicCommandGate<PlayerCommands.Create>>().As<ICommandGate<PlayerCommands.Create>>();
-            builder.RegisterType<BasicCommandGate<PlayerCommands.Update>>().As<ICommandGate<PlayerCommands.Update>>();
-            builder.RegisterType<PlayerCommandHandler>().AsImplementedInterfaces();
-            builder.RegisterType<PlayerValidators.UsernameValidation>().AsImplementedInterfaces();
-
-            builder.RegisterType<BasicQueryGate<PlayerQueries.All>>().As<IQueryGate<PlayerQueries.All>>();
-            builder.RegisterType<BasicQueryGate<PlayerQueries.Dropdown>>().As<IQueryGate<PlayerQueries.Dropdown>>();
-            builder.RegisterType<PlayerQueries.All>().AsImplementedInterfaces();
-            builder.RegisterType<PlayerQueries.Dropdown>().AsImplementedInterfaces();
-            builder.RegisterType<PlayerQueries.FilteredByName>().AsImplementedInterfaces();
-
-            IContainer container = builder.Build();
-
-            builder = new ContainerBuilder();
-            builder.RegisterInstance(container).As<IContainer>();
-            builder.Update(container);
+            IContainer container = new TournamentzContainerBuilder().Build();
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {

@@ -9,15 +9,18 @@
 
     public abstract class PlayerValidators
     {
-        public class UsernameValidation
+        public class UniqueUsernameValidation
             : IValidator<PlayerCommands.Create>
         {
             public BusinessRuleCollection Validate(PlayerCommands.Create command)
             {
-                bool usernameBad = string.IsNullOrWhiteSpace(command.Nickname) || command.Nickname.Length <= 3;
+                IRepository<Player> playersRepo = command.ExecutionContext.UnitOfWork.Repository<Player>();
+
+                bool existsSameNamePlayer = playersRepo.Query
+                    .Any(p => p.Nickname == command.Nickname);
 
                 return new BusinessRule(
-                    !usernameBad,
+                    !existsSameNamePlayer,
                     "Nickname mora biti duži od 3 znaka");
             }
         }
