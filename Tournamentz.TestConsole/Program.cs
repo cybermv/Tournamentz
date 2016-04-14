@@ -30,24 +30,22 @@
 
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
-                ParameteredQueryGate<PlayerQueries.FilteredByName, string> gate =
-                    new ParameteredQueryGate<PlayerQueries.FilteredByName, string>();
-
-                Console.WriteLine("Test edit");
-
-                IQueryResult<PlayerQueries.FilteredByName> result1 = gate.Query(context, "ti");
-
-                List<PlayerQueries.FilteredByName> res = result1.Query.ToList();
-
                 ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
                 context.User = manager.Find("prvi.user", "prvi.user");
+
+                IParameteredQueryGate<PlayerQueries.FilteredByName, string> parameteredQueryGate =
+                    container.Resolve<IParameteredQueryGate<PlayerQueries.FilteredByName, string>>();
+
+                IQueryResult<PlayerQueries.FilteredByName> result1 = parameteredQueryGate.Query(context, "ti");
+
+                List<PlayerQueries.FilteredByName> list1 = result1.Query.ToList();
+
+                
 
                 IQueryGate<PlayerQueries.All> playersGate = context.Services
                     .Resolve<IQueryGate<PlayerQueries.All>>();
 
                 IQueryResult<PlayerQueries.All> queryResult1 = playersGate.Query(context);
-
-                context.User = manager.Find("admin", "adminadmin");
 
                 IQueryResult<PlayerQueries.All> queryResult2 = playersGate.Query(context);
 
