@@ -13,7 +13,6 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Mvc.Filters;
 
     /// <summary>
     /// Base class for all controllers.
@@ -22,9 +21,12 @@
     /// </summary>
     public abstract class TournamentzControllerBase : Controller
     {
+        private bool _disposed;
+
         protected TournamentzControllerBase(IExecutionContext executionContext)
         {
             this.ExecutionContext = executionContext;
+            this._disposed = false;
         }
 
         /// <summary>
@@ -170,7 +172,12 @@
 
         protected override void Dispose(bool disposing)
         {
-            this.ExecutionContext.Dispose();
+            if (!this._disposed)
+            {
+                this.ExecutionContext.Dispose();
+                this._disposed = true;
+            }
+
             base.Dispose(disposing);
         }
     }

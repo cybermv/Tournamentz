@@ -80,7 +80,6 @@
     <Compile Include="Migrations\201603131425470_InitialDomainModel.Designer.cs">
       <DependentUpon>201603131425470_InitialDomainModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserCreateDatabaseInitializer.cs" />
     <Compile Include="Entity\ApplicationUser.cs" />
     <Compile Include="Entity\Core\EntityBase.cs" />
     <Compile Include="Entity\Core\TrackedEntityBase.cs" />

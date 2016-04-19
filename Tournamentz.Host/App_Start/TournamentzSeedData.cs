@@ -1,32 +1,15 @@
-﻿namespace Tournamentz.DAL
+﻿namespace Tournamentz.Host
 {
-    using Core;
-    using Entity;
-    using Identity;
+    using BL;
+    using DAL.Core;
+    using DAL.Entity;
+    using DAL.Identity;
     using Microsoft.AspNet.Identity;
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
 
-    public class UserCreateDatabaseInitializer : IDatabaseInitializer<TournamentzModelContext>
+    public static class TournamentzSeedData
     {
-        public void InitializeDatabase(TournamentzModelContext context)
+        public static void Seed(IUnitOfWork uow)
         {
-            if (!context.Database.Exists())
-            {
-                context.Database.Create();
-            }
-
-            this.Seed(context);
-            context.SaveChanges();
-        }
-
-        protected void Seed(TournamentzModelContext context)
-        {
-            if (context.Players.Any()) { return; }
-
-            BasicUnitOfWork uow = new BasicUnitOfWork(context);
-
             Player adminPlayer = new Player { Nickname = "admin", Name = "System", Surname = "Admin" };
             Player player1 = new Player { Nickname = "prvi.user", Name = "Prvi", Surname = "User" };
             Player player2 = new Player { Nickname = "drugi.user", Name = "Drugi", Surname = "User" };
@@ -43,8 +26,8 @@
             playerRepo.Insert(player4);
             playerRepo.Insert(player5);
 
-            ApplicationRole adminRole = new ApplicationRole { Id = new Guid("817EF2BA-3863-4C3A-954E-CBBA8809F361"), Name = "Admin" };
-            ApplicationRole userRole = new ApplicationRole { Id = new Guid("3E2DDD01-0243-4E38-B563-80BCA9EF7BA7"), Name = "User" };
+            ApplicationRole adminRole = new ApplicationRole { Id = TournamentzRoles.AdminGuid, Name = "Admin" };
+            ApplicationRole userRole = new ApplicationRole { Id = TournamentzRoles.UserGuid, Name = "User" };
 
             IRepository<ApplicationRole> roleRepo = uow.Repository<ApplicationRole>();
 
@@ -81,7 +64,7 @@
                 Email = "treci.user@tournamentz.com"
             };
 
-            userManager.Create(adminUser, "adminadmin");
+            userManager.Create(adminUser, "system.admin");
             userManager.Create(prviUser, "prvi.user");
             userManager.Create(drugiUser, "drugi.user");
             userManager.Create(treciUser, "treci.user");
@@ -91,8 +74,6 @@
             userManager.AddToRole(prviUser.Id, "User");
             userManager.AddToRole(drugiUser.Id, "User");
             userManager.AddToRole(treciUser.Id, "User");
-
-            uow.Commit();
         }
     }
 }

@@ -4,7 +4,7 @@
     using System;
     using System.Linq;
 
-    public interface IRepository
+    public interface IRepository : IQueryable
     {
         IUnitOfWork Owner { get; }
 
@@ -20,7 +20,7 @@
 
     }
 
-    public interface IRepository<TEntity> : IRepository
+    public interface IRepository<TEntity> : IRepository, IQueryable<TEntity>
         where TEntity : class, IEntity
     {
         new IQueryable<TEntity> Query { get; }

@@ -201,6 +201,7 @@
     <Compile Include="Api\Controllers\ValuesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
+    <Compile Include="App_Start\TournamentzSeedData.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Identity\ApplicationSignInManager.cs" />
     <Compile Include="Identity\ApplicationUserManagerConfiguration.cs" />

@@ -58,17 +58,22 @@
             // a new instance each time
             builder.RegisterType<TournamentzModelContext>()
                 .As<DbContext>()
-                .As<TournamentzModelContext>();
+                .As<TournamentzModelContext>()
+                .InstancePerDependency()
+                .ExternallyOwned();
 
             // each UnitOfWork gets it's own model context
             builder.RegisterType<BasicUnitOfWork>()
-                .As<IUnitOfWork>();
+                .As<IUnitOfWork>()
+                .InstancePerDependency()
+                .ExternallyOwned();
 
             // there is only one ExecutionContext per request, with it's own
             // UnitOfWork and model context
             builder.RegisterType<BasicExecutionContext>()
                 .As<IExecutionContext>()
-                .InstancePerRequest();
+                .InstancePerRequest()
+                .ExternallyOwned();
 
             // the Logger is a singleton
             builder.RegisterType<NLogWrappedLogger>()

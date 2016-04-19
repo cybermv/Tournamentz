@@ -74,8 +74,8 @@
 
                 if (this._transaction != null)
                 {
-                    this.Rollback();
-                    KillTransaction();
+                    this._transaction.Rollback();
+                    this.KillTransaction();
                 }
 
                 this.Context.Dispose();

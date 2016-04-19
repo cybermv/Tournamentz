@@ -17,7 +17,6 @@
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
-            Database.SetInitializer(new UserCreateDatabaseInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
