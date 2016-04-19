@@ -77,25 +77,5 @@
             logger.LogCommand<TCommand>(command, result);
             return result;
         }
-
-        public ICommandResult Run(ICommand command)
-        {
-            if (typeof(TCommand) != command.GetType())
-            {
-                throw new InvalidOperationException(
-                    string.Format("The command gate '{0}' cannot run command '{1}'",
-                        this.GetType().Name,
-                        command.GetType().Name));
-            }
-
-            MethodInfo runMethod = this.GetType()
-                .GetMethods()
-                .Single(m => m.Name == "Run" &&
-                             m.GetParameters().Length == 1 &&
-                             m.GetParameters()[0].ParameterType == command.GetType());
-
-            object returnObj = runMethod.Invoke(this, new object[] { command });
-            return (ICommandResult)returnObj;
-        }
     }
 }

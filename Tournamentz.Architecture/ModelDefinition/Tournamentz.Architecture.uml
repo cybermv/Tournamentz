@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="444b4745-afff-4223-98ab-173268b9a07a"
+  name="Tournamentz.Architecture" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <appliedStereotypesInternal>
+    <stereotypeInstance
+      Id="1b5d20f1-99cb-4aa8-ba45-6ca47952ec72"
+      name="namespace"
+      profile="CSharpProfile">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="76bfacc0-93b3-4009-8dd5-d5b522af1cc7">
+          <propertyInstance
+            Id="6eb5193c-b862-440b-b89c-bb588b1e8153"
+            name="BaseName" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="c00fe844-968b-4684-bc6c-7d7b1b942aa3">
+          <propertyInstance
+            Id="42d6e94d-d6e2-4e49-a20e-f3024f69f8e1"
+            name="ClrAttributes" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="13ece6c3-37a1-4a64-a73a-240827c4fedd">
+          <propertyInstance
+            Id="2c8b2885-fe7a-4f10-afd3-4f73265ac9f1"
+            name="Usings" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance
+      Id="eb13712f-669d-4717-9c59-38b39788f87a"
+      name="TextTemplateBindings"
+      profile="TextTemplateBindings">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="266564ad-9cd2-4108-a74e-994386e37e8c">
+          <propertyInstance
+            Id="2316a9a8-2db1-4896-8aef-2b88f9c83ab3"
+            name="Alias"
+            value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="5a2168b4-2070-4803-847c-54e77909d68d">
+          <propertyInstance
+            Id="5f9065e2-be4b-4946-afee-9f0476b2ff08"
+            name="TemplateFilePath"
+            value="ClassTemplate=D:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=D:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=D:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=D:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="9c6d0d4c-876a-4a00-b3e3-3482fa9bc598">
+          <propertyInstance
+            Id="e38b12ed-17cd-4f49-be1f-04409c9766ea"
+            name="ProjectPath"
+            value="ClassTemplate=..\Tournamentz.ArchitectureLib\Tournamentz.ArchitectureLib.csproj|EnumTemplate=..\Tournamentz.ArchitectureLib\Tournamentz.ArchitectureLib.csproj|InterfaceTemplate=..\Tournamentz.ArchitectureLib\Tournamentz.ArchitectureLib.csproj|StructTemplate=..\Tournamentz.ArchitectureLib\Tournamentz.ArchitectureLib.csproj" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="cebde356-30ca-4728-8f83-ad8b526aede3">
+          <propertyInstance
+            Id="7cadf621-1c62-440d-b99a-06c026b8495d"
+            name="TargetDirectory"
+            value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="dab1698a-500d-403c-8b38-88eec9306ff7">
+          <propertyInstance
+            Id="d3c9e870-bbec-434e-ba16-010d7ddb2a87"
+            name="TargetName"
+            value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="95f95a5b-8867-4ad9-a4f6-b314675c92e7">
+          <propertyInstance
+            Id="aebf75c5-26fd-4d83-bb4c-946f5762bff7"
+            name="Overwrite"
+            value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="1444ceea-a30e-4af8-9b92-f23e4157de7e">
+          <propertyInstance
+            Id="d22fd735-9e7d-48e7-ac3b-fe493818bf0b"
+            name="Parameters" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="ff347e64-7bdd-4335-8b4e-cdc2632c7e4d">
+      <profileInstance
+        Id="789a4c5c-404b-4c77-a001-6528f2709b88"
+        name="CSharpProfile" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="a30823b2-3558-447f-8c16-64891f692f11">
+      <profileInstance
+        Id="f1ca2026-3f58-435c-97b6-f886b931b397"
+        name="TextTemplateBindings" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="7c3f1e80-4740-4972-88ec-c9ea390e8ea7"
+        name="IUnitOfWork"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="7eecaa10-6c05-4305-8477-7a5a16ef7b2b"
+            name="DbContext"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="2bd5f3bb-34ba-454b-8dd8-0e3f965517da"
+            name="IRepository&lt;TEntity&gt; Repository"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="f4dc1bec-4308-4fc8-a66f-e94c12b2289d"
+        name="IRepository&lt;TEntity&gt; where TEntity : IEntity"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="5f26561d-59f9-4d36-8d8b-31975268440b">
+            <classMoniker
+              Id="9dd1e39f-a736-41f3-a697-be3647ff25d4"
+              LastKnownName="TournamentzModelContext : DbContext"
+              LastKnownLocation="Tournamentz.Architecture.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributes>
+          <property
+            Id="b3c5a9e0-9dfd-4b0c-9538-c82af224aeea"
+            name="IUnitOfWork Owner"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+        <ownedOperations>
+          <operation
+            Id="5c4311d6-7cb2-4f2c-88a9-89631b037f14"
+            name="IQueryable&lt;TEntity&gt; Query"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="86cdaaca-12ac-4641-a829-1b2a747089f1"
+            name="TEntity FindById"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fcac3f82-b4df-49f3-8bda-e87a9858818d"
+                  name="Guid id"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="be05cdaa-a5ce-41cb-bfed-512d366be0fc"
+            name="TEntity Insert"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="addac6ee-476e-4280-bfeb-6b4b0bc9893f"
+                  name="TEntity entity"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="c1531e6e-d9cb-4ec3-98b5-df5ed517dec3"
+            name="TEntity Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fae43a4f-9655-47b7-8240-37fdfbbc5519"
+                  name="TEntity entity"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="a9202c99-d00c-495f-b538-9db73c6d43bd"
+            name="bool Delete"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a6ad3df0-b4b9-4479-87e3-14e1cd5415f0"
+                  name="Guid id)"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="e219a2b5-7a96-40ca-a5b8-e1fac8b126e5"
+        name="IUnitOfWork : IDisposable"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="fef04585-ee46-4b8c-b408-f4a8d1ef407f">
+            <classMoniker
+              Id="9dd1e39f-a736-41f3-a697-be3647ff25d4"
+              LastKnownName="TournamentzModelContext : DbContext"
+              LastKnownLocation="Tournamentz.Architecture.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributes>
+          <property
+            Id="8823c5e2-ae00-4495-ba03-9236c0ba78ae"
+            name="DbContext Context"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+        <ownedOperations>
+          <operation
+            Id="6d69b8f9-8064-4e3d-990b-3b90f1982030"
+            name="IRepository&lt;TEntity&gt; Repository&lt;TEntity&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="44dc6f21-b1ff-463f-ae92-e24daaa7d25a"
+            name="void Commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="7c12f346-5a62-454a-82cb-ba9207d79ba5"
+            name="void Rollback"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="0a500fe2-181a-431f-a91c-b03b95da7a6b"
+        name="IExecutionContext : IDisposable"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="3721e805-591d-4441-9a76-3d98a652c1dd">
+            <interfaceMoniker
+              Id="e219a2b5-7a96-40ca-a5b8-e1fac8b126e5"
+              LastKnownName="IUnitOfWork : IDisposable"
+              LastKnownLocation="Tournamentz.Architecture.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributes>
+          <property
+            Id="23d7f9fe-359f-4f7c-9aa6-f78b84ba081e"
+            name="IUnitOfWork UnitOfWork"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="af582255-ab32-42a1-854c-5e50d85feef0"
+            name="ApplicationUser User"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="d339e4c9-3738-4e93-b6ed-ab577e0719fc"
+            name="IContainer Services"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="3e308f7b-bdff-44c9-b9e3-860ddb074eab"
+        name="ICommand"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="d18c275f-f1fa-46ee-98d1-e7bcb16a3f08">
+            <interfaceMoniker
+              Id="0a500fe2-181a-431f-a91c-b03b95da7a6b"
+              LastKnownName="IExecutionContext : IDisposable"
+              LastKnownLocation="Tournamentz.Architecture.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributes>
+          <property
+            Id="c2b6469f-acfb-40b8-93c7-f3e2a4e42f77"
+            name="IExecutionContext ExecutionContext"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="b7a4605d-dda6-4f07-b257-6d93db8b0cfb"
+        name="IQuery"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="8c5f3b7a-2ad8-4283-b24f-7401aa467f6b">
+            <interfaceMoniker
+              Id="0a500fe2-181a-431f-a91c-b03b95da7a6b"
+              LastKnownName="IExecutionContext : IDisposable"
+              LastKnownLocation="Tournamentz.Architecture.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributes>
+          <property
+            Id="e35117ae-7b1e-433e-b002-7c802e023b1f"
+            name="IExecutionContext ExecutionContext"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="6f473474-da30-4180-a81d-f5149e72c005"
+        name="ICommandHandler&lt;TCommand&gt; where TCommand : ICommand"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9dd1e39f-a736-41f3-a697-be3647ff25d4"
+        name="TournamentzModelContext : DbContext"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="cf4ad799-a033-41e3-86e0-9cc7d0b48fb4"
+            name="IDatabase Database"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="ca40c724-5fc1-4534-8988-a70e06ff53e4"
+            name="DbSet&lt;T&gt; Set&lt;T&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

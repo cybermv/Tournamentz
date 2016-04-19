@@ -32,31 +32,19 @@
 
             // register all command handlers
             builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => t.GetInterfaces()
-                    .Any(i => i.IsConstructedGenericType &&
-                              i.GetGenericTypeDefinition() == typeof (ICommandHandler<>)))
-                .AsImplementedInterfaces();
+                .AsClosedTypesOf(typeof (ICommandHandler<>));
 
             // register all validators
             builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => t.GetInterfaces()
-                    .Any(i => i.IsConstructedGenericType &&
-                              i.GetGenericTypeDefinition() == typeof(IValidator<>)))
-                .AsImplementedInterfaces();
+                .AsClosedTypesOf(typeof (IValidator<>));
 
             // register all basic query handlers
             builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => t.GetInterfaces()
-                    .Any(i => i.IsConstructedGenericType &&
-                              i.GetGenericTypeDefinition() == typeof(IQueryHandler<>)))
-                .AsImplementedInterfaces();
+                .AsClosedTypesOf(typeof (IQueryHandler<>));
             
             // register all parametered query handlers
             builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => t.GetInterfaces()
-                    .Any(i => i.IsConstructedGenericType &&
-                              i.GetGenericTypeDefinition() == typeof (IParameteredQueryHandler<,>)))
-                .AsImplementedInterfaces();
+                .AsClosedTypesOf(typeof (IParameteredQueryHandler<,>));
 
             IContainer container = builder.Build();
 

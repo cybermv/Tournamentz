@@ -28,10 +28,18 @@
         {
             IContainer container = new TournamentzContainerBuilder().Build();
 
+            using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
+            {
+                uow.Commit();
+                uow.Commit();
+
+            }
+
+
             using (IExecutionContext context = container.Resolve<IExecutionContext>())
             {
                 ApplicationUserManager manager = new ApplicationUserManager(context.UnitOfWork);
-                context.User = manager.Find("prvi.user", "prvi.user");
+                context.User = manager.Find("admin", "adminadmin");
 
                 IParameteredQueryGate<PlayerQueries.FilteredByName, string> parameteredQueryGate =
                     container.Resolve<IParameteredQueryGate<PlayerQueries.FilteredByName, string>>();
@@ -39,7 +47,6 @@
                 IQueryResult<PlayerQueries.FilteredByName> result1 = parameteredQueryGate.Query(context, "ti");
 
                 List<PlayerQueries.FilteredByName> list1 = result1.Query.ToList();
-
                 
 
                 IQueryGate<PlayerQueries.All> playersGate = context.Services
@@ -51,10 +58,10 @@
 
                 List<PlayerQueries.All> allPlayers = queryResult2.Query.ToList();
 
-                ICommandGate createGate = context.Services
+                ICommandGate<PlayerCommands.Create> createGate = context.Services
                     .Resolve<ICommandGate<PlayerCommands.Create>>();
 
-                ICommand createCmd = new PlayerCommands.Create
+                PlayerCommands.Create createCmd = new PlayerCommands.Create
                 {
                     ExecutionContext = context,
                     Nickname = "vele",
@@ -64,7 +71,7 @@
 
                 ICommandResult result = createGate.Run(createCmd);
 
-                ICommandGate updateGate = context.Services
+                ICommandGate<PlayerCommands.Update> updateGate = context.Services
                     .Resolve<ICommandGate<PlayerCommands.Update>>();
 
                 PlayerCommands.Update update = new PlayerCommands.Update
