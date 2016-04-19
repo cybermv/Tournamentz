@@ -14,7 +14,7 @@
         }
 
         [RequiresRole(TournamentzRoles.User)]
-        public class CreateFromPlayer : CommandBase
+        public class CreateOnePlayerTeam : CommandBase
         {
             public string Nickname { get; set; }
 

@@ -21,7 +21,7 @@
             };
 
             tournamentsRepo.Insert(newTournament);
-
+            
             // TODO: dodaj logiranog igraca kao sudionika turnira
         }
     }

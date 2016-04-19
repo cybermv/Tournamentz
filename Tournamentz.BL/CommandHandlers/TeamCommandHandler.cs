@@ -9,7 +9,7 @@
 
     public class TeamCommandHandler : CommandHandlerBase
         , ICommandHandler<TeamCommands.Create>
-        , ICommandHandler<TeamCommands.CreateFromPlayer>
+        , ICommandHandler<TeamCommands.CreateOnePlayerTeam>
         , ICommandHandler<TeamCommands.Rename>
         , ICommandHandler<TeamCommands.Delete>
     {
@@ -27,7 +27,7 @@
             this.Result.ReturnValue = newTeam;
         }
 
-        public void Handle(TeamCommands.CreateFromPlayer command)
+        public void Handle(TeamCommands.CreateOnePlayerTeam command)
         {
             PlayerCommands.Create createPlayer = new PlayerCommands.Create
             {
