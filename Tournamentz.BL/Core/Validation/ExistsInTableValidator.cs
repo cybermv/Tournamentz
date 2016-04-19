@@ -1,12 +1,12 @@
 ﻿namespace Tournamentz.BL.Core.Validation
 {
     using Attribute;
-    using Command;
     using Rule;
     using System;
     using System.Linq;
     using System.Reflection;
     using Command.Interface;
+    using DAL.Core;
 
     public static class ExistsInTableValidator
     {
@@ -39,11 +39,10 @@
                 }
 
                 MethodInfo repoMethod = genericRepoMethod.MakeGenericMethod(propToValidate.Attribute.EntityType);
-                object repoInstance = repoMethod.Invoke(command.ExecutionContext.UnitOfWork, null);
+                IRepository repoInstance = (IRepository) repoMethod.Invoke(command.ExecutionContext.UnitOfWork, null);
 
-                MethodInfo findMethod = repoInstance.GetType().GetMethod("FindById");
-                object value = propToValidate.Property.GetValue(command);
-                object foundEntity = findMethod.Invoke(repoInstance, new[] { value });
+                Guid value = (Guid)propToValidate.Property.GetValue(command);
+                object foundEntity = repoInstance.FindById(value);
 
                 // TODO: localize
                 rules.Add(new BusinessRule(

@@ -4,19 +4,33 @@
     using System;
     using System.Linq;
 
-    public interface IRepository<TEntity>
-        where TEntity : class, IEntity
+    public interface IRepository
     {
         IUnitOfWork Owner { get; }
 
-        IQueryable<TEntity> Query { get; }
+        IQueryable Query { get; }
 
-        TEntity FindById(Guid id);
+        object FindById(Guid id);
 
-        TEntity Insert(TEntity entity);
+        object Insert(object entity);
 
-        TEntity Update(TEntity entity);
+        object Update(object entity);
 
         bool Delete(Guid id);
+
+    }
+
+    public interface IRepository<TEntity> : IRepository
+        where TEntity : class, IEntity
+    {
+        new IQueryable<TEntity> Query { get; }
+
+        new TEntity FindById(Guid id);
+
+        new TEntity Insert(TEntity entity);
+
+        new TEntity Update(TEntity entity);
+
+        new bool Delete(Guid id);
     }
 }
