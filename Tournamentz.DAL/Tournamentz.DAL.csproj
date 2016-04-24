@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201603121524000_AddedTestTodoEntries.Designer.cs">
       <DependentUpon>201603121524000_AddedTestTodoEntries.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604232023286_AddedCreatorToTeam.cs" />
+    <Compile Include="Migrations\201604232023286_AddedCreatorToTeam.Designer.cs">
+      <DependentUpon>201604232023286_AddedCreatorToTeam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TournamentzModelContext.cs" />
@@ -111,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603131425470_InitialDomainModel.resx">
       <DependentUpon>201603131425470_InitialDomainModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604232023286_AddedCreatorToTeam.resx">
+      <DependentUpon>201604232023286_AddedCreatorToTeam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
