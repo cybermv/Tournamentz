@@ -17,7 +17,15 @@
                     {
                         if (_container == null)
                         {
-                            _container = new TournamentzContainerBuilder().Build();
+                            ContainerBuilder builder = new ContainerBuilder();
+                            TournamentzContainerBuilder.RegisterTournamentzModule(builder);
+                            IContainer container = builder.Build();
+
+                            builder = new ContainerBuilder();
+                            builder.RegisterInstance(container).As<IContainer>();
+                            builder.Update(container);
+
+                            _container = container;
                         }
                     }
                 }
