@@ -26,7 +26,16 @@
     {
         private static void Main()
         {
-            IContainer container = new TournamentzContainerBuilder().Build();
+            ContainerBuilder builder = new ContainerBuilder();
+
+
+
+            TournamentzContainerBuilder.RegisterTournamentzModule(builder);
+            IContainer container = builder.Build();
+
+            builder = new ContainerBuilder();
+            builder.RegisterInstance(container).As<IContainer>();
+            builder.Update(container);
 
             using (IUnitOfWork uow = new BasicUnitOfWork(new TournamentzModelContext()))
             {
