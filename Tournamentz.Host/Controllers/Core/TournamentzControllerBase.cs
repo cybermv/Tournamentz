@@ -13,6 +13,10 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using BL.Core.Command;
+    using BL.Core.Query;
+    using DAL.Identity;
+    using Microsoft.AspNet.Identity;
 
     /// <summary>
     /// Base class for all controllers.
@@ -97,12 +101,12 @@
             {
                 IOwinContext owinContext = filterContext.HttpContext.GetOwinContext();
 
-                IRepository<ApplicationUser> userRepo = this.ExecutionContext.UnitOfWork
-                    .Repository<ApplicationUser>();
-
                 Guid userId = owinContext.Authentication.User.Identity.GetUserGuid();
 
-                this.ExecutionContext.User = userRepo.FindById(userId);
+                ApplicationUserManager userManager = new ApplicationUserManager(this.ExecutionContext.UnitOfWork);
+                ApplicationUser user = userManager.FindById(userId);
+
+                this.ExecutionContext.User = user;
 
                 if (this.ExecutionContext.User == null)
                 {

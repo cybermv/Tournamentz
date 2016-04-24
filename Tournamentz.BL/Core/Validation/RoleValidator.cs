@@ -25,7 +25,7 @@
                 // TODO: localize
                 rules.Add(new BusinessRule(
                     role != null,
-                    "Za akciju je potrebna rola {0}"));
+                    $"Za akciju je potrebna rola {attribute.RoleId}"));
             }
 
             return rules;
