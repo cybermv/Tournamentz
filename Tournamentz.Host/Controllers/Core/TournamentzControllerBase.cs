@@ -10,6 +10,7 @@
     using Extensions;
     using Microsoft.Owin;
     using System;
+    using System.Data.Entity;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -103,8 +104,11 @@
 
                 Guid userId = owinContext.Authentication.User.Identity.GetUserGuid();
 
-                ApplicationUserManager userManager = new ApplicationUserManager(this.ExecutionContext.UnitOfWork);
-                ApplicationUser user = userManager.FindById(userId);
+                ApplicationUser user = this.ExecutionContext.UnitOfWork.Repository<ApplicationUser>()
+                    .Include(a => a.Roles)
+                    .Include(a => a.Claims)
+                    .Include(a => a.Logins)
+                    .SingleOrDefault(a => a.Id == userId);
 
                 this.ExecutionContext.User = user;
 

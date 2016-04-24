@@ -1,15 +1,19 @@
 ﻿namespace Tournamentz.BL.CommandHandlers
 {
-    using System;
     using Commands;
     using Core.Command;
     using Core.Command.Interface;
     using DAL.Core;
     using DAL.Entity;
+    using System;
+    using System.Linq;
 
     public class TeamCommandHandler : CommandHandlerBase
         , ICommandHandler<TeamCommands.Create>
         , ICommandHandler<TeamCommands.CreateOnePlayerTeam>
+        , ICommandHandler<TeamCommands.AddExistingPlayer>
+        , ICommandHandler<TeamCommands.AddNewPlayer>
+        , ICommandHandler<TeamCommands.RemovePlayer>
         , ICommandHandler<TeamCommands.Rename>
         , ICommandHandler<TeamCommands.Delete>
     {
@@ -19,12 +23,13 @@
 
             Team newTeam = new Team
             {
-                Title = command.Title
+                Title = command.Title,
+                CreatorId = command.ExecutionContext.User.Id
             };
 
             teamRepo.Insert(newTeam);
 
-            this.Result.ReturnValue = newTeam;
+            this.Result.ReturnValue = newTeam.Id;
         }
 
         public void Handle(TeamCommands.CreateOnePlayerTeam command)
@@ -37,32 +42,86 @@
                 ExecutionContext = command.ExecutionContext
             };
 
-            Guid playerId = this.RunCommand<PlayerCommands.Create, Guid>(createPlayer);
+            object playerId = this.RunCommand(createPlayer);
 
             if (this.CannotContinue) { return; }
 
             TeamCommands.Create createTeam = new TeamCommands.Create
             {
-                Title = string.Format("Team {0}", command.Nickname),
+                Title = string.Format("Tim {0}", command.Nickname),
                 ExecutionContext = command.ExecutionContext
             };
 
-            Guid teamId = this.RunCommand<TeamCommands.Create, Guid>(createTeam);
+            object teamId = this.RunCommand(createTeam);
 
             if (this.CannotContinue) { return; }
 
-            TeamPlayerCommands.Create createTeamPlayer = new TeamPlayerCommands.Create
+            TeamCommands.AddExistingPlayer addExistingPlayer = new TeamCommands.AddExistingPlayer
             {
-                TeamId = teamId,
-                PlayerId = playerId,
+                TeamId = (Guid)teamId,
+                PlayerId = (Guid)playerId,
                 ExecutionContext = command.ExecutionContext
             };
 
-            Guid id = this.RunCommand<TeamPlayerCommands.Create, Guid>(createTeamPlayer);
+            object id = this.RunCommand(addExistingPlayer);
 
             if (this.CannotContinue) { return; }
 
             this.Result.ReturnValue = id;
+        }
+
+        public void Handle(TeamCommands.AddExistingPlayer command)
+        {
+            IRepository<TeamPlayer> teamPlayersRepo = command.ExecutionContext.UnitOfWork.Repository<TeamPlayer>();
+
+            TeamPlayer newTeamPlayer = new TeamPlayer
+            {
+                TeamId = command.TeamId,
+                PlayerId = command.PlayerId
+            };
+
+            teamPlayersRepo.Insert(newTeamPlayer);
+
+            this.Result.ReturnValue = newTeamPlayer.Id;
+        }
+
+        public void Handle(TeamCommands.AddNewPlayer command)
+        {
+            PlayerCommands.Create createPlayer = new PlayerCommands.Create
+            {
+                Nickname = command.Nickname,
+                Name = command.Name,
+                Surname = command.Surname,
+                ExecutionContext = command.ExecutionContext
+            };
+
+            object createdPlayerId = this.RunCommand(createPlayer);
+
+            if (this.CannotContinue) { return; }
+
+            TeamCommands.AddExistingPlayer addExistingPlayer = new TeamCommands.AddExistingPlayer
+            {
+                TeamId = command.TeamId,
+                PlayerId = (Guid)createdPlayerId,
+                ExecutionContext = command.ExecutionContext
+            };
+
+            object createdTeamPlayerId = this.RunCommand(addExistingPlayer);
+
+            if (this.CannotContinue) { return; }
+
+            this.Result.ReturnValue = createdTeamPlayerId;
+        }
+
+        public void Handle(TeamCommands.RemovePlayer command)
+        {
+            IRepository<TeamPlayer> teamPlayersRepo = command.ExecutionContext.UnitOfWork.Repository<TeamPlayer>();
+
+            TeamPlayer playerToRemove = teamPlayersRepo.Query
+                .Single(tp => tp.TeamId == command.TeamId &&
+                              tp.PlayerId == command.PlayerId);
+
+            teamPlayersRepo.Delete(playerToRemove.Id);
         }
 
         public void Handle(TeamCommands.Rename command)
