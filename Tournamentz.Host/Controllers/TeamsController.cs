@@ -1,18 +1,18 @@
 ﻿namespace Tournamentz.Host.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
-    using System.Web.UI.WebControls;
     using Autofac;
     using BL.Commands;
     using BL.Core;
-    using BL.Core.Command;
     using BL.Core.Command.Interface;
     using BL.Core.Query.Interface;
     using BL.Queries;
     using Core;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using System.Web.UI.WebControls;
 
     [Authorize]
     public class TeamsController : TournamentzControllerBase
@@ -67,6 +67,7 @@
         }
 
         // GET: Teams/ById/29d52bfb-d521-4535-b473-3babe914cb96
+        [HttpGet]
         public ActionResult ById(Guid id)
         {
             IQueryResult<TeamQueries.My> queryResult = this.RunQuery<TeamQueries.My>();
@@ -76,6 +77,7 @@
         }
 
         // POST: Teams/New
+        [HttpPost]
         public ActionResult New(TeamCommands.Create createCommand)
         {
             ICommandResult commandResult = this.RunCommand(createCommand);
@@ -86,8 +88,61 @@
                 return View(createCommand);
             }
 
-            return RedirectToAction("ById", new {id = commandResult.ReturnValue});
+            return RedirectToAction("ById", new { id = commandResult.ReturnValue });
         }
 
+        // POST: Teams/AddNewPlayer
+        [HttpPost]
+        public ActionResult AddNewPlayer(TeamCommands.AddNewPlayer command)
+        {
+            ICommandResult result = this.RunCommand(command);
+
+            if (result.IsFailed())
+            {
+                this.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return this.Json(result.BusinessRules.Where(b => b.IsBroken));
+            }
+
+            this.Response.StatusCode = (int)HttpStatusCode.OK;
+            return this.Json(result.ReturnValue);
+        }
+
+        // POST: Teams/AddExistingPlayer
+        [HttpPost]
+        public ActionResult AddExistingPlayer(TeamCommands.AddExistingPlayer command)
+        {
+            ICommandResult result = this.RunCommand(command);
+
+            if (result.IsFailed())
+            {
+                this.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return this.Json(result.BusinessRules.Where(b => b.IsBroken));
+            }
+
+            this.Response.StatusCode = (int)HttpStatusCode.OK;
+            return this.Json(result.ReturnValue);
+        }
+
+        // GET: Teams/Players/e4bea7a5-8e36-4d26-a6f2-16291543ab3b
+        [HttpGet]
+        public ActionResult Players(Guid id)
+        {
+            IQueryResult<TeamQueries.My> queryResult = this.RunQuery<TeamQueries.My>();
+
+            if (queryResult.IsFailed())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            TeamQueries.My team = queryResult.Query
+                .SingleOrDefault(t => t.Id == id);
+
+            if (team == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return this.Json(team.Players, JsonRequestBehavior.AllowGet);
+        }
     }
 }

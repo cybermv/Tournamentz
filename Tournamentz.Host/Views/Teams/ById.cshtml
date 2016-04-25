@@ -9,33 +9,96 @@
 
 <table class="table table-striped table-responsive table-hover">
     <thead>
-        <tr class="success">
-            <th class="col-xs-8">Nadimak igrača</th>
-            <th class="col-xs-4">Akcije</th>
-        </tr>
+    <tr class="success">
+        <th class="col-xs-8">Nadimak igrača</th>
+        <th class="col-xs-4">Akcije</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (TeamQueries.My.PlayerInfo player in Model.Players)
-        {
-            <tr>
-                <td>@player.Nickname</td>
-                <td>
-                    <a href="@Url.Action("ById", "Teams", new {Id = player.Id})"><i class="fa fa-edit"></i></a>
-                </td>
-            </tr>
-        }
+    @foreach (TeamQueries.My.PlayerInfo player in Model.Players)
+    {
+        <tr>
+            <td>@player.Nickname</td>
+            <td>
+                <a href="@Url.Action("ById", "Teams", new {Id = player.Id})"><i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+    }
     </tbody>
 
     <tfoot>
-        <tr>
-            <td colspan="2" class="text-right">
-                <button id="showAddExistingPlayerModal" class="btn btn-primary">Dodaj postojećeg igrača!</button>
-                <button id="showAddNewPlayerModal" class="btn btn-success">Dodaj novog igrača!</button>
-            </td>
-        </tr>
+    <tr>
+        <td colspan="2" class="text-right">
+            <button id="showAddExistingPlayerModal" class="btn btn-primary">Dodaj postojećeg igrača!</button>
+            <button id="showAddNewPlayerModal" class="btn btn-success">Dodaj novog igrača!</button>
+        </td>
+    </tr>
     </tfoot>
 
 </table>
+
+<div class="modal fade" id="addExistingPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addExistingPlayerModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="addExistingPlayerModal-label">Dodaj postojećeg igrača</h4>
+            </div>
+            <div class="modal-body">
+                <p>OVDI SE BIRA PLEYER</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Odustani</button>
+                <button type="button" class="btn btn-success">Odaberi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addNewPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addNewPlayerModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="addNewPlayerModal-label">Dodaj novog igrača</h4>
+            </div>
+            <div class="modal-body">
+                <form id="newPlayerForm" class="form-horizontal">
+
+                    <div id="newPlayerFormErrors" style="display: none;" class="alert alert-danger">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Nickname", "Nadimak", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Nickname", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Name", "Ime", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Name", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Surname", "Prezime", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Surname", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </form>
+
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Odustani</button>
+                <button type="button" class="btn btn-success" id="addNewPlayerButton">Dodaj</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
@@ -43,11 +106,48 @@
         $(function () {
 
             $('#showAddExistingPlayerModal').on('click', function() {
-                alert('EXISTING PLAY');
+                $('#addExistingPlayerModal').modal('show');
             });
 
             $('#showAddNewPlayerModal').on('click', function () {
-                alert('NEW PLAY');
+                $('#addNewPlayerModal').modal('show');
+            });
+
+            $('#addNewPlayerButton').on('click', function() {
+                var arr = $('#newPlayerForm').serializeArray(), obj = {};
+                $.each(arr, function(_, val) {
+                    obj[val.name] = val.value;
+                });
+
+                obj.TeamId = '@Model.Id';
+
+                $.ajax({
+                    url: '@Url.Action("AddNewPlayer", "Teams")',
+                    method:'POST',
+                    data: obj,
+                    success: function() {
+                        $('#newPlayerFormErrors').hide();
+                        $('#addNewPlayerModal').modal('hide');
+                        // TODO: refetch grid
+                    },
+                    error: function (resp) {
+                        if (resp.responseJSON.length < 1) {
+                            return;
+                        }
+
+                        var list = $('<ul>');
+                        $.each(resp.responseJSON, function(_, rule) {
+                            list.append($('<li>').text(rule.Message));
+                        });
+                        $('#newPlayerFormErrors').children().remove();
+                        $('#newPlayerFormErrors').append(list);
+                        $('#newPlayerFormErrors').show();
+
+                    }
+                });
+
+
+                console.info('wooot', obj);
             });
         })
     </script>
