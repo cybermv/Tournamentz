@@ -104,12 +104,8 @@
 
                 Guid userId = owinContext.Authentication.User.Identity.GetUserGuid();
 
-                ApplicationUser user = this.ExecutionContext.UnitOfWork.Repository<ApplicationUser>()
-                    .Include(a => a.Roles)
-                    .Include(a => a.Claims)
-                    .Include(a => a.Logins)
-                    .SingleOrDefault(a => a.Id == userId);
-
+                ApplicationUserManager userManager = new ApplicationUserManager(this.ExecutionContext.UnitOfWork);
+                ApplicationUser user = userManager.FindById(userId);
                 this.ExecutionContext.User = user;
 
                 if (this.ExecutionContext.User == null)

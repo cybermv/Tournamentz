@@ -9,6 +9,8 @@
         where TQuery : IQuery
     {
         private Exception _exception;
+        private IQueryable<TQuery> _innerQueryable;
+        private string _sqlQuery;
 
         public QueryResult()
         {
@@ -43,14 +45,24 @@
 
         IQueryable IQueryResult.Query { get { return this.Query; } }
 
-        public IQueryable<TQuery> Query { get; set; }
+        public IQueryable<TQuery> Query
+        {
+            get
+            {
+                return this._innerQueryable;
+            }
+            set { this._innerQueryable = value;
+                this._sqlQuery = value.ToString();
+            }
+        }
 
         public override string ToString()
         {
             switch (this.Status)
             {
                 case QueryResultStatus.Success:
-                    return string.Format("Success; query = {0}", this.Query);
+                    // TODO: the access
+                    return string.Format("Success; query = {0}", this._sqlQuery);
 
                 case QueryResultStatus.PermissionError:
                     return string.Format("Permission error; count = {0}", this.PermissionRules.Count(p => p.IsBroken));
