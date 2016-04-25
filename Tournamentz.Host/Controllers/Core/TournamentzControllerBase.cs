@@ -5,19 +5,15 @@
     using BL.Core.Command.Interface;
     using BL.Core.Query.Interface;
     using BL.Core.Rule;
-    using DAL.Core;
     using DAL.Entity;
+    using DAL.Identity;
     using Extensions;
+    using Microsoft.AspNet.Identity;
     using Microsoft.Owin;
     using System;
-    using System.Data.Entity;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using BL.Core.Command;
-    using BL.Core.Query;
-    using DAL.Identity;
-    using Microsoft.AspNet.Identity;
 
     /// <summary>
     /// Base class for all controllers.
@@ -26,6 +22,7 @@
     /// </summary>
     public abstract class TournamentzControllerBase : Controller
     {
+        private bool _isCommittedOrRollbacked = false;
         private bool _disposed;
 
         protected TournamentzControllerBase(IExecutionContext executionContext)
@@ -117,24 +114,23 @@
 
         /// <summary>
         /// Handles the disposal of the <see cref="IExecutionContext"/> - either
-        /// commits or rollbacks the <see cref="IUnitOfWork"/>
+        /// commits or rollbacks the <see cref="DAL.Core.IUnitOfWork"/>
         /// </summary>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (_isCommittedOrRollbacked) { return; }
+            this._isCommittedOrRollbacked = true;
 
             int statusCode = filterContext.HttpContext.Response.StatusCode;
             if (statusCode >= 400) // TODO: find better mechanism
             {
-                this.Rollback();
+                this.ExecutionContext.UnitOfWork.Rollback();
             }
             else
             {
-                this.Commit();
+                this.ExecutionContext.UnitOfWork.Commit();
             }
         }
-
-        private bool _isCommittedOrRollbacked = false;
 
         protected void Commit()
         {
@@ -176,7 +172,7 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (disposing && !this._disposed)
             {
                 this.ExecutionContext.Dispose();
                 this._disposed = true;

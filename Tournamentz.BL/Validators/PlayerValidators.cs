@@ -21,7 +21,7 @@
 
                 return new BusinessRule(
                     !existsSameNamePlayer,
-                    "Nickname mora biti duži od 3 znaka");
+                    "Nadimak igrača već postoji u sustavu!");
             }
         }
 

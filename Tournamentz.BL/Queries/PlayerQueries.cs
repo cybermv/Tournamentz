@@ -38,7 +38,7 @@
                     .Select(p => new Dropdown
                     {
                         Id = p.Id,
-                        Text = p.Nickname + " - " + p.Name + " " + p.Surname
+                        Text = p.Nickname + p.Name != null ? (" - " + p.Name + " " + p.Surname) : ""
                     });
             }
         }

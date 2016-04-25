@@ -4,19 +4,16 @@
     using System.Collections.Generic;
     using System.Linq;
     using Core;
+    using Core.Attribute;
     using Core.Query;
     using DAL.Core;
     using DAL.Entity;
 
     public abstract class TeamQueries
     {
+        [RequiresRole(TournamentzRoles.User)]
         public class My : BasicQueryBase<My>
         {
-            public My()
-            {
-                this.Players=new EnumerableQuery<PlayerInfo>(new List<PlayerInfo>());
-            }
-
             public override IQueryable<My> Query(IExecutionContext context)
             {
                 IRepository<Team> teamRepo = context.UnitOfWork.Repository<Team>();
@@ -27,20 +24,19 @@
                     {
                         Id = t.Id,
                         Title = t.Title,
-                        /*Players = t.TeamPlayers
-                            .AsQueryable() // TODO mvelenik: ovo ne valja jebemti sunce
+                        Players = t.TeamPlayers
                             .Select(tp => new PlayerInfo
                             {
                                 Id = tp.PlayerId,
                                 Nickname = tp.Player.Nickname
-                            })*/
+                            })
+                            .ToList()
                     });
-                ;
             }
 
             public string Title { get; set; }
 
-            public IQueryable<PlayerInfo> Players { get; set; }
+            public List<PlayerInfo> Players { get; set; }
 
             public class PlayerInfo
             {
@@ -50,6 +46,7 @@
             }
         }
 
+        [RequiresRole(TournamentzRoles.User)]
         public class PlayingIn : BasicQueryBase<PlayingIn>
         {
             public override IQueryable<PlayingIn> Query(IExecutionContext context)
@@ -72,6 +69,7 @@
             public string Creator { get; set; }
         }
 
+        [RequiresRole(TournamentzRoles.User)]
         public class All : BasicQueryBase<All>
         {
             public override IQueryable<All> Query(IExecutionContext context)

@@ -82,6 +82,7 @@
 
             if (commandResult.IsFailed())
             {
+                this.AddErrorsFromResult(commandResult);
                 return View(createCommand);
             }
 
