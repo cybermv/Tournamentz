@@ -1,13 +1,13 @@
 ﻿@using Tournamentz.BL.Queries
-@model List<TeamQueries.All>
+@model List<TeamQueries.PlayingIn>
 
 @{
-    ViewBag.Title = "Svi timovi";
+    ViewBag.Title = "Timovi u kojima igram";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<p>Ovo su svi timovi dostupni u sustavu!</p>
+<p>Ovo su svi timovi u kojima sam ja igrač!</p>
 
 <table class="table table-bordered table-striped table-hover table-responsive">
     <thead>
@@ -17,11 +17,11 @@
     </thead>
 
     <tbody>
-    @foreach (TeamQueries.All team in Model)
-    {
-        <tr>
-            <td>@team.Title</td>
-        </tr>
-    }
+        @foreach (TeamQueries.PlayingIn team in Model)
+        {
+            <tr>
+                <td>@team.Title</td>
+            </tr>
+        }
     </tbody>
 </table>

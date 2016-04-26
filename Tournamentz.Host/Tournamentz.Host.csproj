@@ -340,6 +340,7 @@
     <Content Include="Views\Teams\My.cshtml" />
     <Content Include="Views\Teams\New.cshtml" />
     <Content Include="Views\Teams\ById.cshtml" />
+    <Content Include="Views\Teams\PlayingIn.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

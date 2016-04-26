@@ -1,11 +1,14 @@
 ﻿@using Tournamentz.BL.Queries
-@model TeamQueries.My
+@model TeamQueries.All
 
 @{
     ViewBag.Title = "Tim - " + Model.Title;
 }
 
 <h2>@ViewBag.Title</h2>
+
+<div id="playersGridErrors" style="display: none;" class="alert alert-danger">
+</div>
 
 <table class="table table-striped table-responsive table-hover">
     <thead>
@@ -14,16 +17,7 @@
         <th class="col-xs-4">Akcije</th>
     </tr>
     </thead>
-    <tbody>
-    @foreach (TeamQueries.My.PlayerInfo player in Model.Players)
-    {
-        <tr>
-            <td>@player.Nickname</td>
-            <td>
-                <a href="@Url.Action("ById", "Teams", new {Id = player.Id})"><i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
-    }
+    <tbody id="playersTable">
     </tbody>
 
     <tfoot>
@@ -105,6 +99,8 @@
     <script>
         $(function () {
 
+            fetchPlayers();
+
             $('#showAddExistingPlayerModal').on('click', function() {
                 $('#addExistingPlayerModal').modal('show');
             });
@@ -128,7 +124,7 @@
                     success: function() {
                         $('#newPlayerFormErrors').hide();
                         $('#addNewPlayerModal').modal('hide');
-                        // TODO: refetch grid
+                        fetchPlayers();
                     },
                     error: function (resp) {
                         if (resp.responseJSON.length < 1) {
@@ -145,10 +141,67 @@
 
                     }
                 });
-
-
-                console.info('wooot', obj);
             });
+
+            function fetchPlayers() {
+                $('#playersTable').children().remove();
+
+                $.ajax({
+                    url: '@Url.Action("Players", "Teams", new {id = Model.Id})',
+                    success: function (data) {
+                        $.each(data, function(_, item) {
+                            var cellNick = $('<td>');
+                            cellNick.text(item.Nickname);
+
+                            var action = $('<a>');
+                            action.data('team-id', '@Model.Id');
+                            action.data('player-id', item.Id);
+                            action.append($('<i>').addClass('fa fa-remove'));
+                            action.css('cursor: pointer;');
+                            action.on('click', callRemovePlayer);
+
+                            var cellAction = $('<td>');
+                            cellAction.append(action);
+
+                            var row = $('<tr>');
+                            row.append(cellNick);
+                            row.append(cellAction);
+                            $('#playersTable').append(row);
+                        });
+                    }
+                });
+            }
+
+            function callRemovePlayer() {
+                var node = $(this);
+                var command = {
+                    TeamId: node.data('team-id'),
+                    PlayerId: node.data('player-id')
+                };
+
+                $.ajax({
+                    url: '@Url.Action("RemovePlayer", "Teams")',
+                    method: 'POST',
+                    data: command,
+                    success: function () {
+                        $('#playersGridErrors').hide();
+                        fetchPlayers();
+                    },
+                    error: function (resp) {
+                        if (resp.responseJSON.length < 1) {
+                            return;
+                        }
+
+                        var list = $('<ul>');
+                        $.each(resp.responseJSON, function (_, rule) {
+                            list.append($('<li>').text(rule.Message));
+                        });
+                        $('#playersGridErrors').append(list);
+                        $('#playersGridErrors').show();
+
+                    }
+                });
+            }
         })
     </script>
 }

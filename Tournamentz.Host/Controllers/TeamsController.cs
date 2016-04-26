@@ -1,6 +1,5 @@
 ﻿namespace Tournamentz.Host.Controllers
 {
-    using Autofac;
     using BL.Commands;
     using BL.Core;
     using BL.Core.Command.Interface;
@@ -12,7 +11,6 @@
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
-    using System.Web.UI.WebControls;
 
     [Authorize]
     public class TeamsController : TournamentzControllerBase
@@ -44,7 +42,11 @@
         [HttpGet]
         public ActionResult PlayingIn()
         {
-            return View();
+            IQueryResult<TeamQueries.PlayingIn> allTeams = this.RunQuery<TeamQueries.PlayingIn>();
+
+            List<TeamQueries.PlayingIn> allTeamsList = allTeams.Query.ToList();
+
+            return View(allTeamsList);
         }
 
         // GET: Teams/All
@@ -68,10 +70,12 @@
 
         // GET: Teams/ById/29d52bfb-d521-4535-b473-3babe914cb96
         [HttpGet]
-        public ActionResult ById(Guid id)
+        public ActionResult ById(Guid? id)
         {
-            IQueryResult<TeamQueries.My> queryResult = this.RunQuery<TeamQueries.My>();
-            TeamQueries.My team = queryResult.Query
+            if (!id.HasValue) { return this.RedirectToAction("My", "Teams");}
+
+            IQueryResult<TeamQueries.All> queryResult = this.RunQuery<TeamQueries.All>();
+            TeamQueries.All team = queryResult.Query
                 .SingleOrDefault(t => t.Id == id);
             return View(team);
         }
@@ -104,7 +108,7 @@
             }
 
             this.Response.StatusCode = (int)HttpStatusCode.OK;
-            return this.Json(result.ReturnValue);
+            return this.Json(new { ReturnValue = result.ReturnValue });
         }
 
         // POST: Teams/AddExistingPlayer
@@ -120,13 +124,31 @@
             }
 
             this.Response.StatusCode = (int)HttpStatusCode.OK;
-            return this.Json(result.ReturnValue);
+            return this.Json(new { ReturnValue = result.ReturnValue });
+        }
+
+        // POST: Teams/RemovePlayer
+        [HttpPost]
+        public ActionResult RemovePlayer(TeamCommands.RemovePlayer command)
+        {
+            ICommandResult result = this.RunCommand(command);
+
+            if (result.IsFailed())
+            {
+                this.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return this.Json(result.BusinessRules.Where(b => b.IsBroken));
+            }
+
+            this.Response.StatusCode = (int)HttpStatusCode.OK;
+            return this.Json(new { ReturnValue = result.ReturnValue });
         }
 
         // GET: Teams/Players/e4bea7a5-8e36-4d26-a6f2-16291543ab3b
         [HttpGet]
-        public ActionResult Players(Guid id)
+        public ActionResult Players(Guid? id)
         {
+            if (!id.HasValue) { return this.StatusCode(HttpStatusCode.NotFound); }
+
             IQueryResult<TeamQueries.My> queryResult = this.RunQuery<TeamQueries.My>();
 
             if (queryResult.IsFailed())

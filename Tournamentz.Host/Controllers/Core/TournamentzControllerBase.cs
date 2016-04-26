@@ -12,6 +12,7 @@
     using Microsoft.Owin;
     using System;
     using System.Linq;
+    using System.Net;
     using System.Web;
     using System.Web.Mvc;
 
@@ -87,6 +88,15 @@
             {
                 this.ModelState.AddModelError("", commandResult.Exception);
             }
+        }
+
+        /// <summary>
+        /// Returns a given HTTP status code
+        /// </summary>
+        /// <param name="code">The code of the response</param>
+        protected ActionResult StatusCode(HttpStatusCode code)
+        {
+            return new HttpStatusCodeResult(code);
         }
 
         /// <summary>
