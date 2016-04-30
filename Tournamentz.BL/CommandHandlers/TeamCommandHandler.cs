@@ -7,6 +7,7 @@
     using DAL.Entity;
     using System;
     using System.Linq;
+    using Extensions;
 
     public class TeamCommandHandler : CommandHandlerBase
         , ICommandHandler<TeamCommands.Create>
@@ -59,7 +60,7 @@
             TeamCommands.AddExistingPlayer addExistingPlayer = new TeamCommands.AddExistingPlayer
             {
                 TeamId = (Guid)teamId,
-                PlayerId = (Guid)playerId,
+                Nickname = createPlayer.Nickname,
                 ExecutionContext = command.ExecutionContext
             };
 
@@ -73,11 +74,15 @@
         public void Handle(TeamCommands.AddExistingPlayer command)
         {
             IRepository<TeamPlayer> teamPlayersRepo = command.ExecutionContext.UnitOfWork.Repository<TeamPlayer>();
+            IRepository<Player> playerRepo = command.ExecutionContext.UnitOfWork.Repository<Player>();
+
+            // TODO: check for null in validator
+            Player player = playerRepo.FindByNickname(command.Nickname);
 
             TeamPlayer newTeamPlayer = new TeamPlayer
             {
                 TeamId = command.TeamId,
-                PlayerId = command.PlayerId
+                PlayerId = player.Id
             };
 
             teamPlayersRepo.Insert(newTeamPlayer);
@@ -102,7 +107,7 @@
             TeamCommands.AddExistingPlayer addExistingPlayer = new TeamCommands.AddExistingPlayer
             {
                 TeamId = command.TeamId,
-                PlayerId = (Guid)createdPlayerId,
+                Nickname = command.Nickname,
                 ExecutionContext = command.ExecutionContext
             };
 

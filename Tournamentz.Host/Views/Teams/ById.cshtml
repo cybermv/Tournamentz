@@ -39,11 +39,23 @@
                 <h4 class="modal-title" id="addExistingPlayerModal-label">Dodaj postojećeg igrača</h4>
             </div>
             <div class="modal-body">
-                <p>OVDI SE BIRA PLEYER</p>
+                <form id="existingPlayerForm" class="form-horizontal">
+
+                    <div id="existingPlayerFormErrors" style="display: none;" class="alert alert-danger">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Nickname", "Nadimak postojećeg igrača", new { @class = "col-md-6 control-label" })
+                        <div class="col-md-6">
+                            @Html.TextBox("Nickname", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Odustani</button>
-                <button type="button" class="btn btn-success">Odaberi</button>
+                <button type="button" class="btn btn-success" id="addExistingPlayerButton">Odaberi</button>
             </div>
         </div>
     </div>
@@ -84,8 +96,7 @@
                     </div>
 
                 </form>
-
-                </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Odustani</button>
                 <button type="button" class="btn btn-success" id="addNewPlayerButton">Dodaj</button>
@@ -138,6 +149,40 @@
                         $('#newPlayerFormErrors').children().remove();
                         $('#newPlayerFormErrors').append(list);
                         $('#newPlayerFormErrors').show();
+
+                    }
+                });
+            });
+
+            $('#addExistingPlayerButton').on('click', function () {
+                var arr = $('#existingPlayerForm').serializeArray(), obj = {};
+                $.each(arr, function (_, val) {
+                    obj[val.name] = val.value;
+                });
+
+                obj.TeamId = '@Model.Id';
+
+                $.ajax({
+                    url: '@Url.Action("AddExistingPlayer", "Teams")',
+                    method: 'POST',
+                    data: obj,
+                    success: function () {
+                        $('#existingPlayerFormErrors').hide();
+                        $('#addExistingPlayerModal').modal('hide');
+                        fetchPlayers();
+                    },
+                    error: function (resp) {
+                        if (resp.responseJSON.length < 1) {
+                            return;
+                        }
+
+                        var list = $('<ul>');
+                        $.each(resp.responseJSON, function (_, rule) {
+                            list.append($('<li>').text(rule.Message));
+                        });
+                        $('#existingPlayerFormErrors').children().remove();
+                        $('#existingPlayerFormErrors').append(list);
+                        $('#existingPlayerFormErrors').show();
 
                     }
                 });

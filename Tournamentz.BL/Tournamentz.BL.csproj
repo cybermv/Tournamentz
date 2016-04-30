@@ -118,6 +118,7 @@
     <Compile Include="Core\Validation\ExistsInTableValidator.cs" />
     <Compile Include="Core\Validation\IValidator.cs" />
     <Compile Include="Core\Validation\RoleValidator.cs" />
+    <Compile Include="Extensions\PlayerRepositoryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\PlayerQueries.cs" />
     <Compile Include="Queries\TeamQueries.cs" />

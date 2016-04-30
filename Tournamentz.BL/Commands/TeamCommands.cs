@@ -29,8 +29,7 @@
             [ExistsInTable(typeof(Team))]
             public Guid TeamId { get; set; }
 
-            [ExistsInTable(typeof(Player))]
-            public Guid PlayerId { get; set; }
+            public string Nickname { get; set; }
         }
 
         [RequiresRole(TournamentzRoles.User)]
