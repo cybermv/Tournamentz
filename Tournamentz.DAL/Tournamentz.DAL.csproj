@@ -68,6 +68,7 @@
     <Compile Include="Entity\Tournament.cs" />
     <Compile Include="Entity\TournamentRound.cs" />
     <Compile Include="Entity\TournamentRoundParticipant.cs" />
+    <Compile Include="Entity\TournamentTeam.cs" />
     <Compile Include="Entity\TournamentType.cs" />
     <Compile Include="Identity\ApplicationRoleStore.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
@@ -95,6 +96,10 @@
     <Compile Include="Migrations\201604232023286_AddedCreatorToTeam.Designer.cs">
       <DependentUpon>201604232023286_AddedCreatorToTeam.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605012130312_AddedTournamentTeamRelation.cs" />
+    <Compile Include="Migrations\201605012130312_AddedTournamentTeamRelation.Designer.cs">
+      <DependentUpon>201605012130312_AddedTournamentTeamRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TournamentzModelContext.cs" />
@@ -118,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604232023286_AddedCreatorToTeam.resx">
       <DependentUpon>201604232023286_AddedCreatorToTeam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605012130312_AddedTournamentTeamRelation.resx">
+      <DependentUpon>201605012130312_AddedTournamentTeamRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,6 +43,8 @@
 
         public DbSet<TournamentType> TournamentTypes { get; set; }
 
+        public DbSet<TournamentTeam> TournamentTeams { get; set; }
+
         public DbSet<TournamentRound> TournamentRounds { get; set; }
 
         public DbSet<TournamentRoundParticipant> TournamentRoundParticipants { get; set; }
