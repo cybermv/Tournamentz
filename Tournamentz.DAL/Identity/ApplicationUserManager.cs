@@ -49,6 +49,18 @@
             return base.CreateAsync(user);
         }
 
+        public override async Task<ApplicationUser> FindByIdAsync(Guid userId)
+        {
+            ApplicationUser user = await base.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                user.Player = this._unitOfWork.Repository<Player>().FindById(userId);
+            }
+
+            return user;
+        }
+
         // TODO: move this manager to BL
     }
 }

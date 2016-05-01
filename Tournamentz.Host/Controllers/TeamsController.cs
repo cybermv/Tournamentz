@@ -42,11 +42,11 @@
         [HttpGet]
         public ActionResult PlayingIn()
         {
-            IQueryResult<TeamQueries.PlayingIn> allTeams = this.RunQuery<TeamQueries.PlayingIn>();
+            IQueryResult<TeamQueries.PlayingIn> playingInTeams = this.RunQuery<TeamQueries.PlayingIn>();
 
-            List<TeamQueries.PlayingIn> allTeamsList = allTeams.Query.ToList();
+            List<TeamQueries.PlayingIn> playingInTeamsList = playingInTeams.Query.ToList();
 
-            return View(allTeamsList);
+            return View(playingInTeamsList);
         }
 
         // GET: Teams/All
