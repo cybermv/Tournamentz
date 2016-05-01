@@ -203,6 +203,7 @@
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
     <Compile Include="App_Start\TournamentzSeedData.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\ResultsExtensions.cs" />
     <Compile Include="Identity\ApplicationSignInManager.cs" />
@@ -341,6 +342,8 @@
     <Content Include="Views\Teams\New.cshtml" />
     <Content Include="Views\Teams\ById.cshtml" />
     <Content Include="Views\Teams\PlayingIn.cshtml" />
+    <Content Include="Views\Tournaments\My.cshtml" />
+    <Content Include="Views\Tournaments\All.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
