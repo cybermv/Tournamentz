@@ -15,5 +15,25 @@
             [ExistsInTable(typeof(TournamentType))]
             public Guid TournamentTypeId { get; set; }
         }
+
+        [RequiresRole(TournamentzRoles.User)]
+        public class AddTeam : CommandBase
+        {
+            [ExistsInTable(typeof(Tournament))]
+            public Guid TournamentId { get; set; }
+
+            [ExistsInTable(typeof(Team))]
+            public Guid TeamId { get; set; }
+        }
+
+        [RequiresRole(TournamentzRoles.User)]
+        public class RemoveTeam : CommandBase
+        {
+            [ExistsInTable(typeof(Tournament))]
+            public Guid TournamentId { get; set; }
+
+            [ExistsInTable(typeof(Team))]
+            public Guid TeamId { get; set; }
+        }
     }
 }

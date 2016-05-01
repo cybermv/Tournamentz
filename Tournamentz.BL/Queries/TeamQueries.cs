@@ -40,7 +40,7 @@
 
             public class PlayerInfo
             {
-                public Guid  Id { get; set; }
+                public Guid Id { get; set; }
 
                 public string Nickname { get; set; }
             }

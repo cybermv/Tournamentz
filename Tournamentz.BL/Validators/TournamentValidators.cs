@@ -28,8 +28,10 @@
         }
 
         public class OnlyOrganiserCanEditTournament
+            : IValidator<TournamentCommands.AddTeam>
+            , IValidator<TournamentCommands.RemoveTeam>
         {
-            private BusinessRule ValidateInternal(IExecutionContext context, Guid tournamentId)
+            private static BusinessRule ValidateInternal(IExecutionContext context, Guid tournamentId)
             {
                 Tournament tournament = context.UnitOfWork.Repository<Tournament>().FindById(tournamentId);
 
@@ -39,6 +41,34 @@
                 return new BusinessRule(
                     canEditTournament,
                     "Nemaš pravo mijenjati turnir jer nisi organizator");
+            }
+
+            public BusinessRuleCollection Validate(TournamentCommands.AddTeam command)
+            {
+                return ValidateInternal(command.ExecutionContext, command.TournamentId);
+            }
+
+            public BusinessRuleCollection Validate(TournamentCommands.RemoveTeam command)
+            {
+                return ValidateInternal(command.ExecutionContext, command.TournamentId);
+            }
+        }
+
+        public class TeamUniqueOnTournament
+            : IValidator<TournamentCommands.AddTeam>
+        {
+            public BusinessRuleCollection Validate(TournamentCommands.AddTeam command)
+            {
+                IRepository<TournamentTeam> tournamentTeamsRepo =
+                    command.ExecutionContext.UnitOfWork.Repository<TournamentTeam>();
+
+                bool teamExistsOnTournament = tournamentTeamsRepo.Query
+                    .Any(tt => tt.TeamId == command.TeamId &&
+                               tt.TournamentId == command.TournamentId);
+
+                return new BusinessRule(
+                    !teamExistsOnTournament,
+                    "Odabrani tim je već dodan na turnir");
             }
         }
     }
