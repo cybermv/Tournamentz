@@ -31,5 +31,7 @@
         public virtual TournamentType TournamentType { get; set; }
 
         public virtual ICollection<TournamentRound> Rounds { get; set; }
+
+        public virtual ICollection<TournamentTeam> Teams { get; set; }
     }
 }

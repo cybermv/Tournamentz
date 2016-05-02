@@ -20,5 +20,7 @@
         public virtual ICollection<TeamPlayer> TeamPlayers { get; set; }
 
         public virtual ICollection<TournamentRoundParticipant> TournamentRoundParticipants { get; set; }
+
+        public virtual ICollection<TournamentTeam> Tournaments { get; set; }
     }
 }

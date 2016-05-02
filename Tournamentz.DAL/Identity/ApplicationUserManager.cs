@@ -18,7 +18,7 @@
             this._unitOfWork = unitOfWork;
         }
 
-        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        public override async Task<IdentityResult> CreateAsync(ApplicationUser user)
         {
             IRepository<Player> playerRepo = this._unitOfWork.Repository<Player>();
 
@@ -43,10 +43,19 @@
             }
             else
             {
-                return Task.FromResult(new IdentityResult("Username already taken!"));
+                return new IdentityResult("Username already taken!");
             }
 
-            return base.CreateAsync(user);
+            IdentityResult result = await base.CreateAsync(user);
+
+            if (!result.Succeeded) { return result;}
+
+            // TODO: move this to BL due to roles!
+            IdentityResult roleAddResult = await this.AddToRoleAsync(user.Id, "User");
+
+            if (!roleAddResult.Succeeded) { return roleAddResult; }
+
+            return IdentityResult.Success;
         }
 
         public override async Task<ApplicationUser> FindByIdAsync(Guid userId)
