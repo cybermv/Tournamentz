@@ -74,6 +74,14 @@
             userManager.AddToRole(prviUser.Id, "User");
             userManager.AddToRole(drugiUser.Id, "User");
             userManager.AddToRole(treciUser.Id, "User");
+
+            IRepository<TournamentType> tournamentTypesRepo = uow.Repository<TournamentType>();
+
+            TournamentType tournamentType1 = new TournamentType { Name = "Round robin" };
+            TournamentType tournamentType2 = new TournamentType { Name = "Single elimination" };
+
+            tournamentTypesRepo.Insert(tournamentType1);
+            tournamentTypesRepo.Insert(tournamentType2);
         }
     }
 }
