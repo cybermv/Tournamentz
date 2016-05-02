@@ -72,11 +72,14 @@
         [HttpGet]
         public ActionResult ById(Guid? id)
         {
-            if (!id.HasValue) { return this.RedirectToAction("My", "Teams");}
+            if (!id.HasValue) { return this.RedirectToAction("My", "Teams"); }
 
             IQueryResult<TeamQueries.All> queryResult = this.RunQuery<TeamQueries.All>();
             TeamQueries.All team = queryResult.Query
                 .SingleOrDefault(t => t.Id == id);
+
+            if (team == null) { return RedirectToAction("My", "Teams"); }
+
             return View(team);
         }
 

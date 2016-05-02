@@ -70,7 +70,7 @@
         }
 
         [RequiresRole(TournamentzRoles.User)]
-        public class All : BasicQueryBase<All>
+        public class All : KeyValueQueryBase<All>
         {
             public override IQueryable<All> Query(IExecutionContext context)
             {
@@ -80,6 +80,7 @@
                     .Select(t => new All
                     {
                         Id = t.Id,
+                        Text = t.Creator.Player.Nickname + " - " + t.Title,
                         Title = t.Title,
                         Creator = t.Creator.Player.Nickname
                     });

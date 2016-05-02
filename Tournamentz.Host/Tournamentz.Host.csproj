@@ -344,6 +344,8 @@
     <Content Include="Views\Teams\PlayingIn.cshtml" />
     <Content Include="Views\Tournaments\My.cshtml" />
     <Content Include="Views\Tournaments\All.cshtml" />
+    <Content Include="Views\Tournaments\ById.cshtml" />
+    <Content Include="Views\Tournaments\New.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

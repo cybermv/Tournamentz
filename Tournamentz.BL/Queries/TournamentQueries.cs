@@ -1,6 +1,7 @@
 ﻿namespace Tournamentz.BL.Queries
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Core;
     using Core.Attribute;
@@ -19,11 +20,27 @@
                     .Select(t => new My
                     {
                         Id = t.Id,
-                        Title = t.Title
+                        Title = t.Title,
+                        Teams = t.Teams
+                            .Select(tm => new TeamInfo
+                            {
+                                Id = tm.TeamId,
+                                Title = tm.Team.Title
+                            })
+                            .ToList()
                     });
             }
 
             public string Title { get; set; }
+
+            public List<TeamInfo> Teams { get; set; }
+
+            public class TeamInfo
+            {
+                public Guid Id { get; set; }
+
+                public string Title { get; set; }
+            }
         }
 
         [RequiresRole(TournamentzRoles.Admin)]
@@ -46,6 +63,20 @@
             public Guid OrganizerId { get; set; }
 
             public string OrganizerNickname { get; set; }
+        }
+
+        [RequiresRole(TournamentzRoles.User)]
+        public class Types : KeyValueQueryBase<Types>
+        {
+            public override IQueryable<Types> Query(IExecutionContext context)
+            {
+                return context.UnitOfWork.Repository<TournamentType>()
+                    .Select(tt => new Types
+                    {
+                        Id = tt.Id,
+                        Text = tt.Name
+                    });
+            }
         }
     }
 }

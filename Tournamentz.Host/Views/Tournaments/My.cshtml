@@ -1,7 +1,81 @@
-﻿@model List<Tournamentz.BL.Queries.TournamentQueries.My>
+﻿@using Tournamentz.BL.Queries
+@model List<TournamentQueries.My>
 
 @{
     ViewBag.Title = "Moji turniri";
 }
 
 <h2>@ViewBag.Title</h2>
+
+<p>Ovo su turniri koje si ti kreirao!</p>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr class="info">
+            <th class="col-xs-1"></th>
+            <th class="col-xs-8">Naziv turnira</th>
+            <th class="col-xs-3">Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TournamentQueries.My tournament in Model)
+        {
+            <tr>
+                @if (tournament.Teams.Any())
+                {
+                    <td data-toggle="collapse" data-target="#@tournament.Id" class="text-center" style="cursor: pointer;"><i class="fa fa-caret-down"></i></td>
+                }
+                else
+                {
+                    <td>&nbsp;</td>
+                }
+                <td><a href="@Url.Action("ById", "Tournaments", new {Id = tournament.Id})">@tournament.Title</a></td>
+                <td>
+                    <a href="@Url.Action("ById", "Tournaments", new {Id = tournament.Id})"><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+            if (tournament.Teams.Any())
+            {
+                <tr>
+                    <td colspan="3">
+                        <div class="collapse" id="@tournament.Id">
+                            <div class="col-xs-12">
+                                <table class="table table-striped table-responsive table-hover">
+                                    <thead>
+                                        <tr class="success">
+                                            <th class="col-xs-12">Naziv tima</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (TournamentQueries.My.TeamInfo team in tournament.Teams)
+                                        {
+                                            <tr>
+                                                <td>@team.Title</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+            }
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">
+                <a class="btn btn-success" href="@Url.Action("New", "Tournaments")">Kreiraj novi turnir!</a>
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
