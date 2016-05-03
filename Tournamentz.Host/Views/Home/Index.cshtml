@@ -1,31 +1,71 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Početna";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="jumbotron" style="margin-top: 20px;">
+    <h1>Tournamentz</h1>
+    <p class="lead">Jednostavno, brzo i intuitivno vođenje evidencije igrača, timova i rezultata turnira.</p>
+    <div class="col-xs-offset-8 col-xs-4">
+        <a href="@Url.Action("Register","Account")" class="btn btn-success btn-lg">Novi korisnik? &raquo;</a>
+    </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+        <p class="text-center"><i class="fa fa-bolt fa-5x"></i>
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <h2 class="text-center">Jednostavan</h2>
+        <p>
+            Kreiranje igrača je brzo i jednostavno! Složi timove i kreni sa turnirima, a kreirani igrači mogu naknadno dobiti korisničke račune!
+        </p>
     </div>
+
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p class="text-center"><i class="fa fa-money fa-5x"></i>
+        </p>
+        <h2 class="text-center">Besplatan</h2>
+        <p>
+            Tournamentz je besplatan servis i omogućava sve funkcionalnosti bez plaćanja i bez reklama!
+        </p>
     </div>
+
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <p class="text-center"><i class="fa fa-leaf fa-5x"></i>
+        </p>
+        <h2 class="text-center">Ekološki</h2>
+        <p>
+            Tournamentz koristi isključivo datacentre koji svoju energiju dobivaju iz obnovljivih izvora. Igrajte i čuvajte okoliš!
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <p class="text-center">
+            <i class="fa fa-cloud fa-5x"></i>
+        </p>
+        <h2 class="text-center">Cloud</h2>
+        <p>
+            Osnova infrastrukture Tournamentz aplikacije je Cloud&copy; - možete se slobodno hvaliti kako ste moderni i znate koristiti Cloud&copy;.
+        </p>
+    </div>
+
+    <div class="col-md-4">
+        <p class="text-center">
+            <i class="fa fa-github fa-5x"></i>
+        </p>
+        <h2 class="text-center">Open-source</h2>
+        <p>
+            Izvorni kod Tournamentz aplikacije je open-source! Slobodno pomognite u razvoju projekta na službenom <a href="https://github.com/cybermv/Tournamentz">Github</a> repozitoriju.
+        </p>
+    </div>
+
+    <div class="col-md-4">
+        <p class="text-center"><i class="fa fa-file-text fa-5x"></i></p>
+        <h2 class="text-center">Izvještaji</h2>
+        <p>
+            Kroz aplikaciju je moguće generirati izvještaje za ispis, kako bi mogli na oglasnim pločama prikazati rezultate turnira.
+        </p>
     </div>
 </div>
