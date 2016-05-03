@@ -1,6 +1,7 @@
 ﻿namespace Tournamentz.BL.Commands
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Core.Attribute;
     using Core.Command;
     using DAL.Entity;
@@ -10,16 +11,20 @@
         [RequiresRole(TournamentzRoles.User)]
         public class Create : CommandBase
         {
+            [Display(Name = "Naziv")]
             public string Title { get; set; }
         }
 
         [RequiresRole(TournamentzRoles.User)]
         public class CreateOnePlayerTeam : CommandBase
         {
+            [Display(Name = "Nadimak")]
             public string Nickname { get; set; }
 
+            [Display(Name = "Ime")]
             public string Name { get; set; }
 
+            [Display(Name = "Prezime")]
             public string Surname { get; set; }
         }
 
@@ -29,6 +34,7 @@
             [ExistsInTable(typeof(Team))]
             public Guid TeamId { get; set; }
 
+            [Display(Name = "Nadimak")]
             public string Nickname { get; set; }
         }
 
@@ -38,10 +44,13 @@
             [ExistsInTable(typeof(Team))]
             public Guid TeamId { get; set; }
 
+            [Display(Name = "Nadimak")]
             public string Nickname { get; set; }
 
+            [Display(Name = "Ime")]
             public string Name { get; set; }
 
+            [Display(Name = "Prezime")]
             public string Surname { get; set; }
         }
 
@@ -61,6 +70,7 @@
             [ExistsInTable(typeof(Team))]
             public Guid Id { get; set; }
 
+            [Display(Name = "Naziv")]
             public string Title { get; set; }
         }
 

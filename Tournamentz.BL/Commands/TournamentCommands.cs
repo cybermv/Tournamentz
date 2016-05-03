@@ -1,6 +1,7 @@
 ﻿namespace Tournamentz.BL.Commands
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Core.Attribute;
     using Core.Command;
     using DAL.Entity;
@@ -10,8 +11,10 @@
         [RequiresRole(TournamentzRoles.User)]
         public class Create : CommandBase
         {
+            [Display(Name = "Naziv")]
             public string Title { get; set; }
 
+            [Display(Name = "Tip turnira")]
             [ExistsInTable(typeof(TournamentType))]
             public Guid TournamentTypeId { get; set; }
         }
