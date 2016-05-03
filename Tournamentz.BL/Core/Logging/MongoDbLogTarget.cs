@@ -5,7 +5,6 @@
     using NLog;
     using NLog.Config;
     using NLog.Targets;
-    using System;
 
     [Target("MongoDb")]
     public class MongoDbLogTarget : Target
@@ -41,10 +40,10 @@
         protected override void Write(LogEventInfo logEvent)
         {
             // TODO: implement
-            //IMongoCollection<BsonDocument> logCollection = this._database
-            //    .GetCollection<BsonDocument>(this.CollectionName ?? "log");
+            IMongoCollection<BsonDocument> logCollection = this._database
+                .GetCollection<BsonDocument>(this.CollectionName ?? "log");
 
-            //logCollection.InsertOne(logEvent.ToBsonDocument());
+            logCollection.InsertOne(logEvent.ToBsonDocument());
         }
     }
 }
