@@ -4,6 +4,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
+using Microsoft.Owin.Security.Google;
 
 namespace Tournamentz.Host
 {
@@ -48,9 +49,9 @@ namespace Tournamentz.Host
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "000000004C18E248",
+                clientSecret: "Kk34acS2g1TJB5wZm3kSk2LI-UzcmJDX");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
@@ -60,11 +61,11 @@ namespace Tournamentz.Host
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "697963680533-al1vl9dmp2klbndp5hsfn013tk85nqd7.apps.googleusercontent.com",
+                ClientSecret = "a5z2rT66ksGX_GaunXQBGaX-"
+            });
         }
     }
 }
