@@ -22,6 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Početna", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="dropdown">
@@ -30,16 +31,8 @@
                                 <li>@Html.ActionLink("Moji timovi", "My", "Teams")</li>
                                 <li>@Html.ActionLink("Timovi u kojima igram", "PlayingIn", "Teams")</li>
                                 <li>@Html.ActionLink("Svi timovi", "All", "Teams")</li>
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
                             </ul>
                         </li>
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Turniri <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -50,11 +43,14 @@
                                 }
                             </ul>
                         </li>
-
-
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Igre <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Igre u kojima sudjelujem", "My", "Rounds")</li>
+                                <li>@Html.ActionLink("Trenutne igre", "Current", "Rounds")</li>
+                                <li>@Html.ActionLink("Povijest igara", "History", "Rounds")</li>
+                            </ul>
+                        </li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
